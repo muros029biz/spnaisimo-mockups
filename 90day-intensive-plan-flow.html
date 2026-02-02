@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanisimo 短期集中プラン 購入フロー モックアップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ナビゲーション */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .nav-title {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .nav-step {
+            font-size: 0.8rem;
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        /* プログレスバー */
+        .progress-container {
+            position: fixed;
+            top: 48px;
+            left: 0;
+            right: 0;
+            background: #e0e0e0;
+            height: 4px;
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #e67e22);
+            transition: width 0.3s ease;
+        }
+
+        /* 画面コンテナ */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 56px 0 60px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* 画面1: LP部分 */
+        .lp-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .plan-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .plan-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .plan-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .price-box {
+            background: rgba(0,0,0,0.15);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .price-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .price-main {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .price-main span {
+            font-size: 1.2rem;
+        }
+
+        .price-tax {
+            font-size: 1rem;
+            color: #ffd700;
+        }
+
+        .price-per {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .plan-features {
+            background: white;
+            padding: 24px 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            color: #e67e22;
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .feature-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* 画面共通: コンテンツエリア */
+        .content-area {
+            padding: 24px 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        /* 選択肢カード */
+        .option-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-card:hover {
+            border-color: #3498db;
+        }
+
+        .option-card.selected {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .option-card.recommended {
+            position: relative;
+        }
+
+        .option-card.recommended::before {
+            content: 'おすすめ';
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            background: #e67e22;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 10px;
+        }
+
+        .option-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .option-card.selected .option-radio {
+            border-color: #3498db;
+        }
+
+        .option-card.selected .option-radio::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #3498db;
+            border-radius: 50%;
+        }
+
+        .option-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .option-description {
+            margin-left: 34px;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .option-description.highlight {
+            color: #e67e22;
+            font-weight: 500;
+        }
+
+        /* 説明ボックス */
+        .info-box {
+            background: #fff9e6;
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-box-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #996600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-box-title::before {
+            content: 'ℹ️';
+            margin-right: 8px;
+        }
+
+        .info-box-content {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 法定説明エリア */
+        .legal-explanation {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .legal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .legal-title::before {
+            content: '📋';
+            margin-right: 8px;
+        }
+
+        .legal-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .legal-item:last-child {
+            border-bottom: none;
+        }
+
+        .legal-number {
+            background: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .legal-text {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* チェックボックス */
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #f9f9f9;
+        }
+
+        .checkbox-item.checked {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .checkbox-box {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item.checked .checkbox-box {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .checkbox-item.checked .checkbox-box::after {
+            content: '✓';
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* 入力フォーム */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-input::placeholder {
+            color: #aaa;
+        }
+
+        /* 第三者送信 */
+        .third-party-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .third-party-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .third-party-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .third-party-option {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .third-party-option.selected {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .third-party-email {
+            display: none;
+        }
+
+        .third-party-email.show {
+            display: block;
+        }
+
+        /* 概要書面表示エリア */
+        .document-preview {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .document-header {
+            background: #f5f5f5;
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+        }
+
+        .document-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .document-content {
+            padding: 20px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .document-section {
+            margin-bottom: 20px;
+        }
+
+        .document-section-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .download-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .download-button:hover {
+            background: #e5e5e5;
+        }
+
+        .download-button::before {
+            content: '📄';
+            margin-right: 8px;
+        }
+
+        /* 完了画面 */
+        .complete-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2.5rem;
+        }
+
+        .complete-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .complete-message {
+            font-size: 0.95rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .complete-info-box {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .complete-info-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 12px;
+        }
+
+        .complete-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .complete-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .complete-info-label {
+            color: #666;
+        }
+
+        .complete-info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 到達確認 */
+        .confirm-section {
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .confirm-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e65100;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .confirm-title::before {
+            content: '✉️';
+            margin-right: 8px;
+        }
+
+        .confirm-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .confirm-input-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .confirm-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .confirm-input:focus {
+            outline: none;
+            border-color: #e67e22;
+        }
+
+        .confirm-button {
+            padding: 12px 24px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .confirm-success {
+            display: none;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            color: #2e7d32;
+            font-size: 0.9rem;
+        }
+
+        .confirm-success.show {
+            display: block;
+        }
+
+        /* フッターボタン */
+        .footer-buttons {
+            background: white;
+            padding: 20px;
+            margin: 24px 20px 40px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-full {
+            flex: none;
+            width: 100%;
+        }
+
+        /* モックアップ表示用ナビ */
+        .mockup-nav {
+            position: fixed;
+            top: 60px;
+            right: 12px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            z-index: 200;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .mockup-nav span {
+            opacity: 0.7;
+        }
+
+        .mockup-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .mockup-dot.active {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーションバー -->
+    <div class="nav-bar">
+        <div class="nav-title">短期集中プラン お申し込み</div>
+        <div class="nav-step" id="navStep">Step 1/5</div>
+    </div>
+
+    <!-- プログレスバー -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width: 20%"></div>
+    </div>
+
+    <!-- 画面1: LP + 交付方法選択 -->
+    <div class="screen active" id="screen1">
+        <div class="lp-header">
+            <div class="plan-label">DELE対策・旅行前におすすめ</div>
+            <h1 class="plan-title">短期集中プラン</h1>
+            <p class="plan-description">90日間で100回のマンツーマンレッスン</p>
+            <div class="price-box">
+                <div class="price-label">一括</div>
+                <div class="price-main">88,000<span>円</span></div>
+                <div class="price-tax">（税込 96,800円）</div>
+                <div class="price-per">880円 / 1回あたり</div>
+            </div>
+        </div>
+
+        <div class="plan-features">
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <span class="feature-text">90日間の間に100回のレッスンを受講いただけます</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <span class="feature-text">月額プランと重ねてお申込みいただけます</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✓</span>
+                <span class="feature-text">レッスン予約は12時間前まで、キャンセルは10時間前まで</span>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <h2 class="section-title">契約書面の交付方法をお選びください</h2>
+            
+            <div class="option-card recommended selected" id="optionElectronic" onclick="selectOption('electronic')">
+                <div class="option-header">
+                    <div class="option-radio"></div>
+                    <div class="option-title">電子交付（PDF）を希望する</div>
+                </div>
+                <p class="option-description highlight">お申込みおよびお支払い完了後すぐにレッスン予約が可能です。</p>
+            </div>
+
+            <div class="option-card" id="optionPostal" onclick="selectOption('postal')">
+                <div class="option-header">
+                    <div class="option-radio"></div>
+                    <div class="option-title">郵送での交付を希望する</div>
+                </div>
+                <p class="option-description">書面の到着まで3〜5営業日かかります。届いた後にお振込みいただき、ご入金確認後にレッスン予約が可能になります。</p>
+            </div>
+
+            <div class="footer-buttons">
+                <button class="btn btn-primary btn-full" onclick="nextScreen()">申し込みに進む</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画面2: 説明・確認 + 承諾取得 -->
+    <div class="screen" id="screen2">
+        <div class="content-area">
+            <h2 class="section-title">電子交付についてのご説明</h2>
+
+            <div class="legal-explanation">
+                <div class="legal-title">以下の内容をご確認ください</div>
+                
+                <div class="legal-item">
+                    <div class="legal-number">1</div>
+                    <div class="legal-text">電子交付される内容は、契約に関する重要な書類（概要書面・契約書面）です。</div>
+                </div>
+                
+                <div class="legal-item">
+                    <div class="legal-number">2</div>
+                    <div class="legal-text">契約書面のPDFがお客様の端末に届いた日から<strong>8日間</strong>、クーリングオフが可能です。</div>
+                </div>
+                
+                <div class="legal-item">
+                    <div class="legal-number">3</div>
+                    <div class="legal-text"><strong>4.5インチ以上の画面</strong>をお持ちで、ご自身でPDFを保存・閲覧できる方のみ電子交付を受けられます。</div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 0.95rem; margin-bottom: 16px; color: #333;">ご確認事項</h3>
+
+            <div class="checkbox-item" id="check1" onclick="toggleCheck('check1')">
+                <div class="checkbox-box"></div>
+                <div class="checkbox-label">私はスマートフォンまたはPCを日常的に使用し、PDFを自分で保存・閲覧できます。</div>
+            </div>
+
+            <div class="checkbox-item" id="check2" onclick="toggleCheck('check2')">
+                <div class="checkbox-box"></div>
+                <div class="checkbox-label">端末のOS・ブラウザは最新の状態に更新されています。</div>
+            </div>
+
+            <div class="third-party-section">
+                <div class="third-party-title">ご家族など第三者にも契約書面を送信しますか？</div>
+                <div class="third-party-options">
+                    <div class="third-party-option selected" id="thirdPartyNo" onclick="selectThirdParty('no')">希望しない</div>
+                    <div class="third-party-option" id="thirdPartyYes" onclick="selectThirdParty('yes')">希望する</div>
+                </div>
+                <div class="third-party-email" id="thirdPartyEmail">
+                    <input type="email" class="form-input" placeholder="送信先メールアドレス">
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee;">
+                <h3 style="font-size: 0.95rem; margin-bottom: 16px; color: #333;">電子交付への承諾</h3>
+                
+                <div class="info-box">
+                    <div class="info-box-content">
+                        上記の説明内容を理解し、契約書面をPDFファイルのメール添付で受け取ることに承諾します。
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">お名前（フルネーム）<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="fullName" placeholder="例：山田 太郎" oninput="checkForm()">
+                </div>
+
+                <div class="footer-buttons">
+                    <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                    <button class="btn btn-primary" id="btnNext2" onclick="nextScreen()" disabled>次へ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画面3: 概要書面の提示 -->
+    <div class="screen" id="screen3">
+        <div class="content-area">
+            <h2 class="section-title">重要事項説明書（概要書面）</h2>
+
+            <div class="info-box">
+                <div class="info-box-title">お申込み前に必ずご確認ください</div>
+                <div class="info-box-content">
+                    以下の内容をご確認の上、「確認しました」にチェックを入れてください。
+                </div>
+            </div>
+
+            <div class="document-preview">
+                <div class="document-header">
+                    <div class="document-title">重要事項説明書（概要書面）</div>
+                </div>
+                <div class="document-content">
+                    <div class="document-section">
+                        <div class="document-section-title">1. 事業者情報</div>
+                        <p>事業者名：株式会社Spanisimo<br>
+                        所在地：〒XXX-XXXX 東京都○○区○○ X-X-X<br>
+                        電話番号：03-XXXX-XXXX<br>
+                        代表者：○○ ○○</p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">2. 役務の内容</div>
+                        <p>サービス名：短期集中プラン<br>
+                        内容：オンラインスペイン語マンツーマンレッスン<br>
+                        提供回数：50分×100回<br>
+                        有効期間：90日間</p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">3. 料金</div>
+                        <p>販売価格：88,000円（税抜）<br>
+                        消費税：8,800円<br>
+                        <strong>お支払い総額：96,800円（税込）</strong></p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">4. 支払方法・時期</div>
+                        <p>支払方法：PayPal決済<br>
+                        支払時期：お申込み時に一括前払い</p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">5. 役務提供期間</div>
+                        <p>お支払い完了日から90日間</p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">6. クーリングオフについて</div>
+                        <p>契約書面を受領した日から8日間は、書面またはメールにより契約を解除（クーリングオフ）することができます。<br><br>
+                        クーリングオフの連絡先：<br>
+                        メール：support@spani-simo.com</p>
+                    </div>
+                    
+                    <div class="document-section">
+                        <div class="document-section-title">7. 中途解約について</div>
+                        <p>クーリングオフ期間経過後も、将来に向かって契約を解除することができます。この場合、所定の計算方法により精算いたします。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="download-button" onclick="alert('PDFダウンロード機能（モックアップ）')">
+                概要書面PDFをダウンロード
+            </div>
+
+            <div class="checkbox-item" id="checkDocument" onclick="toggleCheck('checkDocument')">
+                <div class="checkbox-box"></div>
+                <div class="checkbox-label">上記の重要事項説明書（概要書面）の内容を確認しました。</div>
+            </div>
+
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-primary" id="btnNext3" onclick="nextScreen()" disabled>決済に進む</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画面4: 決済確認 -->
+    <div class="screen" id="screen4">
+        <div class="content-area">
+            <h2 class="section-title">お申込み内容の確認</h2>
+
+            <div class="complete-info-box" style="background: #e3f2fd; border-color: #90caf9;">
+                <div class="complete-info-title" style="color: #1565c0;">ご購入内容</div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">プラン</span>
+                    <span class="complete-info-value">短期集中プラン</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">レッスン回数</span>
+                    <span class="complete-info-value">50分 × 100回</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">有効期間</span>
+                    <span class="complete-info-value">90日間</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">お支払い総額</span>
+                    <span class="complete-info-value" style="color: #e67e22; font-size: 1.1rem;">96,800円（税込）</span>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">電子交付について</div>
+                <div class="info-box-content">
+                    <p>・概要書面：お申込み画面で確認済み</p>
+                    <p>・契約書面：決済完了後にメールでお送りします</p>
+                    <p>・承諾者：<span id="confirmName">-</span></p>
+                </div>
+            </div>
+
+            <div style="background: #fff3e0; border-radius: 8px; padding: 16px; margin-top: 20px;">
+                <p style="font-size: 0.85rem; color: #e65100; text-align: center;">
+                    「PayPalで決済する」ボタンを押すと、PayPal決済画面に移動します
+                </p>
+            </div>
+
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-primary" style="background: linear-gradient(135deg, #0070ba, #003087);" onclick="nextScreen()">PayPalで決済する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画面5: 完了 -->
+    <div class="screen" id="screen5">
+        <div class="content-area">
+            <div class="complete-icon">✓</div>
+            <h1 class="complete-title">お申込みが完了しました</h1>
+            <p class="complete-message">
+                ご登録のメールアドレスに契約書面をお送りしました。<br>
+                必ずご確認・保存をお願いいたします。
+            </p>
+
+            <div class="complete-info-box">
+                <div class="complete-info-title">ご契約内容</div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">プラン</span>
+                    <span class="complete-info-value">短期集中プラン</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">レッスン回数</span>
+                    <span class="complete-info-value">100回</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">有効期限</span>
+                    <span class="complete-info-value">2026年4月30日まで</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">お支払い金額</span>
+                    <span class="complete-info-value">96,800円</span>
+                </div>
+            </div>
+
+            <div class="confirm-section">
+                <div class="confirm-title">契約書面の到達確認</div>
+                <p class="confirm-text">
+                    契約書面のメールは届きましたか？<br>
+                    PDFを開いて、記載されている<strong>お支払い総額</strong>を入力してください。
+                </p>
+                <div class="confirm-input-group" id="confirmInputGroup">
+                    <input type="text" class="confirm-input" id="confirmAmount" placeholder="例：96800">
+                    <button class="confirm-button" onclick="confirmDelivery()">確認</button>
+                </div>
+                <div class="confirm-success" id="confirmSuccess">
+                    ✓ 契約書面の到達を確認しました。レッスン予約が可能です！
+                </div>
+            </div>
+
+            <div style="background: #e3f2fd; border-radius: 8px; padding: 16px;">
+                <p style="font-size: 0.9rem; color: #1565c0; font-weight: 600; margin-bottom: 8px;">📅 クーリングオフ期間</p>
+                <p style="font-size: 0.85rem; color: #666;">
+                    契約書面のメールを受信した本日から<strong>8日間</strong>（2026年2月7日まで）は、契約を解除することができます。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- モックアップナビゲーション -->
+    <div class="mockup-nav">
+        <span>画面:</span>
+        <div class="mockup-dot active" onclick="goToScreen(1)"></div>
+        <div class="mockup-dot" onclick="goToScreen(2)"></div>
+        <div class="mockup-dot" onclick="goToScreen(3)"></div>
+        <div class="mockup-dot" onclick="goToScreen(4)"></div>
+        <div class="mockup-dot" onclick="goToScreen(5)"></div>
+    </div>
+
+    <script>
+        let currentScreen = 1;
+        const totalScreens = 5;
+        let selectedOption = 'electronic';
+        let checks = {
+            check1: false,
+            check2: false,
+            checkDocument: false
+        };
+        let thirdParty = 'no';
+
+        function updateUI() {
+            // 画面表示
+            document.querySelectorAll('.screen').forEach((s, i) => {
+                s.classList.toggle('active', i + 1 === currentScreen);
+            });
+
+            // プログレスバー
+            document.getElementById('progressBar').style.width = (currentScreen / totalScreens * 100) + '%';
+
+            // ナビステップ
+            document.getElementById('navStep').textContent = `Step ${currentScreen}/${totalScreens}`;
+
+            // モックアップドット
+            document.querySelectorAll('.mockup-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i + 1 === currentScreen);
+            });
+
+            // 画面2のボタン状態
+            const btnNext2 = document.getElementById('btnNext2');
+            if (btnNext2) {
+                btnNext2.disabled = !checks.check1 || !checks.check2 || !document.getElementById('fullName').value.trim();
+            }
+
+            // 画面3のボタン状態
+            const btnNext3 = document.getElementById('btnNext3');
+            if (btnNext3) {
+                btnNext3.disabled = !checks.checkDocument;
+            }
+
+            // 名前を確認画面に反映
+            if (currentScreen === 4) {
+                document.getElementById('confirmName').textContent = document.getElementById('fullName').value || '-';
+            }
+        }
+
+        function selectOption(option) {
+            selectedOption = option;
+            document.getElementById('optionElectronic').classList.toggle('selected', option === 'electronic');
+            document.getElementById('optionPostal').classList.toggle('selected', option === 'postal');
+        }
+
+        function toggleCheck(id) {
+            checks[id] = !checks[id];
+            document.getElementById(id).classList.toggle('checked', checks[id]);
+            updateUI();
+        }
+
+        function selectThirdParty(option) {
+            thirdParty = option;
+            document.getElementById('thirdPartyNo').classList.toggle('selected', option === 'no');
+            document.getElementById('thirdPartyYes').classList.toggle('selected', option === 'yes');
+            document.getElementById('thirdPartyEmail').classList.toggle('show', option === 'yes');
+        }
+
+        function checkForm() {
+            updateUI();
+        }
+
+        function nextScreen() {
+            if (currentScreen === 1 && selectedOption === 'postal') {
+                alert('郵送ルートのモックアップは準備中です');
+                return;
+            }
+            if (currentScreen < totalScreens) {
+                currentScreen++;
+                updateUI();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevScreen() {
+            if (currentScreen > 1) {
+                currentScreen--;
+                updateUI();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function goToScreen(screen) {
+            currentScreen = screen;
+            updateUI();
+            window.scrollTo(0, 0);
+        }
+
+        function confirmDelivery() {
+            const amount = document.getElementById('confirmAmount').value.replace(/[^0-9]/g, '');
+            if (amount === '96800') {
+                document.getElementById('confirmInputGroup').style.display = 'none';
+                document.getElementById('confirmSuccess').classList.add('show');
+            } else {
+                alert('入力された金額が正しくありません。契約書面PDFに記載されているお支払い総額をご確認ください。');
+            }
+        }
+
+        // 初期化
+        updateUI();
+    </script>
+</body>
+</html>
