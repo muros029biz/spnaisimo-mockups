@@ -1009,13 +1009,18 @@
                 
                 <div class="info-box">
                     <div class="info-box-content">
-                        上記の説明内容を理解し、契約書面をPDFファイルのメール添付で受け取ることに承諾します。
+                        上記の説明内容を理解し、契約書面をPDFファイルのメール添付で受け取ることに承諾される場合は、以下にお名前と「理解しました」をご入力ください。
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">お名前（フルネーム）<span class="required">*</span></label>
                     <input type="text" class="form-input" id="fullName" placeholder="例：山田 太郎" oninput="checkForm()">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">「理解しました」と入力してください<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="understandInput" placeholder="理解しました" oninput="checkForm()">
                 </div>
 
                 <div class="footer-buttons">
@@ -1421,7 +1426,9 @@
             // 電子: 画面2のボタン状態
             const btnNext2 = document.getElementById('btnNext2');
             if (btnNext2) {
-                btnNext2.disabled = !checks.check1 || !checks.check2 || !document.getElementById('fullName').value.trim();
+                const understandInput = document.getElementById('understandInput');
+                const isUnderstandValid = understandInput && understandInput.value.trim() === '理解しました';
+                btnNext2.disabled = !checks.check1 || !checks.check2 || !document.getElementById('fullName').value.trim() || !isUnderstandValid;
             }
 
             // 電子: 画面3のボタン状態
