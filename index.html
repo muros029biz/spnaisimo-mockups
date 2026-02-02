@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanisimo モックアップ一覧</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .notice {
+            background: #fff3e0;
+            border: 1px solid #ffcc80;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+            color: #e65100;
+        }
+        .notice strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        .card:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-title::before {
+            content: '📄';
+        }
+        .card-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .card-meta {
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-review {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .status-approved {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-draft {
+            background: #f5f5f5;
+            color: #666;
+        }
+        footer {
+            margin-top: 48px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Spanisimo</div>
+            <p class="subtitle">モックアップ・プロトタイプ一覧</p>
+        </header>
+
+        <div class="notice">
+            <strong>⚠️ 社内確認用</strong>
+            このページは社内レビュー用です。URLの外部共有はご遠慮ください。
+        </div>
+
+        <div class="card-list">
+            <a href="90day-intensive-plan-flow.html" class="card">
+                <div class="card-title">短期集中プラン 購入フロー</div>
+                <p class="card-description">
+                    90日間100回レッスン（税込96,800円）の購入フロー。<br>
+                    特定商取引法に基づく電子交付対応版。
+                </p>
+                <div class="card-meta">
+                    <span class="status status-review">弁護士確認中</span>
+                    最終更新: 2026年2月2日
+                </div>
+            </a>
+
+            <!-- 今後追加するモックアップ用のテンプレート
+            <a href="xxxxx.html" class="card">
+                <div class="card-title">タイトル</div>
+                <p class="card-description">説明文</p>
+                <div class="card-meta">
+                    <span class="status status-draft">下書き</span>
+                    最終更新: 2026年XX月XX日
+                </div>
+            </a>
+            -->
+        </div>
+
+        <footer>
+            <p>© 2026 Spanisimo - Internal Use Only</p>
+        </footer>
+    </div>
+</body>
+</html>
