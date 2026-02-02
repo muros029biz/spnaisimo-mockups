@@ -1096,14 +1096,15 @@
                 </div>
             </div>
 
-            <div class="download-button" onclick="alert('PDFダウンロード機能（モックアップ）')">
-                概要書面PDFをダウンロード
+            <div class="download-button" id="downloadBtn" onclick="downloadDocument()">
+                📥 概要書面PDFをダウンロード【必須】
             </div>
 
-            <div class="checkbox-item" id="checkDocument" onclick="toggleCheck('checkDocument')">
+            <div class="checkbox-item" id="checkDocument" onclick="toggleCheckDocument()" style="opacity: 0.5; pointer-events: none;">
                 <div class="checkbox-box"></div>
-                <div class="checkbox-label">上記の重要事項説明書（概要書面）の内容を確認しました。</div>
+                <div class="checkbox-label">概要書面をダウンロードし、内容を確認しました。</div>
             </div>
+            <p id="downloadHint" style="font-size: 0.8rem; color: #e67e22; margin-top: -8px; margin-bottom: 16px;">※ まず概要書面をダウンロードしてください</p>
 
             <div class="footer-buttons">
                 <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
@@ -1470,6 +1471,36 @@
         function toggleCheck(id) {
             checks[id] = !checks[id];
             document.getElementById(id).classList.toggle('checked', checks[id]);
+            updateUI();
+        }
+
+        let documentDownloaded = false;
+
+        function downloadDocument() {
+            // モックアップ：ダウンロード処理をシミュレート
+            alert('概要書面PDFをダウンロードしました（モックアップ）');
+            documentDownloaded = true;
+            
+            // チェックボックスを有効化
+            const checkDocument = document.getElementById('checkDocument');
+            checkDocument.style.opacity = '1';
+            checkDocument.style.pointerEvents = 'auto';
+            
+            // ヒントを非表示
+            document.getElementById('downloadHint').style.display = 'none';
+            
+            // ダウンロードボタンの見た目を変更
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.innerHTML = '✓ 概要書面PDFをダウンロード済み';
+            downloadBtn.style.background = '#e8f5e9';
+            downloadBtn.style.borderColor = '#a5d6a7';
+            downloadBtn.style.color = '#2e7d32';
+        }
+
+        function toggleCheckDocument() {
+            if (!documentDownloaded) return;
+            checks.checkDocument = !checks.checkDocument;
+            document.getElementById('checkDocument').classList.toggle('checked', checks.checkDocument);
             updateUI();
         }
 
