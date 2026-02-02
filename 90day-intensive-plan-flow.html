@@ -887,46 +887,6 @@
             background: #27ae60;
         }
 
-        /* ルート切替タブ */
-        .route-tabs {
-            position: fixed;
-            top: 52px;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            border-bottom: 1px solid #e0e0e0;
-            z-index: 998;
-        }
-
-        .route-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .route-tab.electronic {
-            color: #3498db;
-        }
-
-        .route-tab.electronic.active {
-            border-bottom-color: #3498db;
-            background: #f0f8ff;
-        }
-
-        .route-tab.postal {
-            color: #27ae60;
-        }
-
-        .route-tab.postal.active {
-            border-bottom-color: #27ae60;
-            background: #e8f5e9;
-        }
     </style>
 </head>
 <body>
@@ -939,12 +899,6 @@
     <!-- プログレスバー -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar" style="width: 20%"></div>
-    </div>
-
-    <!-- ルート切替タブ -->
-    <div class="route-tabs">
-        <div class="route-tab electronic active" onclick="switchRoute('electronic')">📄 電子交付ルート</div>
-        <div class="route-tab postal" onclick="switchRoute('postal')">📮 郵送ルート</div>
     </div>
 
     <!-- ========== 電子交付ルート ========== -->
@@ -994,7 +948,7 @@
                     <div class="option-radio"></div>
                     <div class="option-title">郵送での交付を希望する</div>
                 </div>
-                <p class="option-description">書面の到着まで3〜5営業日かかります。届いた後にお振込みいただき、ご入金確認後にレッスン予約が可能になります。</p>
+                <p class="option-description">書面の到着まで3〜5営業日かかります。届いた後にPayPalでお支払いいただき、ご入金確認後にレッスン予約が可能になります。</p>
             </div>
 
             <div class="footer-buttons">
@@ -1265,7 +1219,7 @@
                 <div class="info-box-title">郵送での交付について</div>
                 <div class="info-box-content">
                     契約に関する重要書類（概要書面・契約書面）を郵送いたします。<br>
-                    書面到着後、記載の口座にお振込みください。
+                    書面到着後、記載のQRコードからPayPalでお支払いください。
                 </div>
             </div>
 
@@ -1338,15 +1292,6 @@
                 </div>
             </div>
 
-            <div class="info-box green">
-                <div class="info-box-title">お申込み後の流れ</div>
-                <div class="info-box-content">
-                    1. 書面を郵送いたします（3〜5営業日）<br>
-                    2. 届いた書面に記載の口座にお振込みください<br>
-                    3. ご入金確認後、アカウントを発行いたします
-                </div>
-            </div>
-
             <div class="footer-buttons">
                 <button class="btn btn-secondary" onclick="prevPostalScreen()">戻る</button>
                 <button class="btn btn-primary postal" onclick="nextPostalScreen()">申し込みを確定する</button>
@@ -1361,7 +1306,7 @@
             <h1 class="complete-title">お申込みを受け付けました</h1>
             <p class="complete-message">
                 契約書面を郵送いたします。<br>
-                届きましたら、書面記載の口座にお振込みください。
+                届きましたら、書面記載のQRコードからPayPalでお支払いください。
             </p>
 
             <div class="postal-steps">
@@ -1375,15 +1320,15 @@
                 <div class="postal-step">
                     <div class="postal-step-number">2</div>
                     <div class="postal-step-content">
-                        <div class="postal-step-title">お振込み</div>
-                        <div class="postal-step-desc">届いた書面に記載の口座にお振込みください</div>
+                        <div class="postal-step-title">お支払い</div>
+                        <div class="postal-step-desc">届いた書面に記載のQRコードからPayPalでお支払いください</div>
                     </div>
                 </div>
                 <div class="postal-step">
                     <div class="postal-step-number">3</div>
                     <div class="postal-step-content">
                         <div class="postal-step-title">ご連絡</div>
-                        <div class="postal-step-desc">お振込み完了後、メールでご一報ください</div>
+                        <div class="postal-step-desc">お支払い完了後、<a href="mailto:support-jp@spanisimo.com" style="color: #27ae60; font-weight: 600;">support-jp@spanisimo.com</a> にご一報ください</div>
                     </div>
                 </div>
                 <div class="postal-step">
@@ -1393,25 +1338,6 @@
                         <div class="postal-step-desc">ご入金確認後、レッスン予約が可能になります</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="email-highlight">
-                <p style="font-size: 0.9rem; color: #333; margin-bottom: 8px;">
-                    <strong>お振込み完了後のご連絡先</strong>
-                </p>
-                <p style="font-size: 1rem;">
-                    📧 <a href="mailto:support-jp@spanisimo.com">support-jp@spanisimo.com</a>
-                </p>
-                <p style="font-size: 0.8rem; color: #666; margin-top: 8px;">
-                    ご一報いただけますと、スムーズにアカウントを発行できます。
-                </p>
-            </div>
-
-            <div style="background: #e3f2fd; border-radius: 8px; padding: 16px; margin-top: 24px;">
-                <p style="font-size: 0.9rem; color: #1565c0; font-weight: 600; margin-bottom: 8px;">📅 クーリングオフ期間</p>
-                <p style="font-size: 0.85rem; color: #666;">
-                    契約書面がお手元に届いた日から<strong>8日間</strong>は、契約を解除することができます。
-                </p>
             </div>
         </div>
     </div>
@@ -1438,27 +1364,6 @@
             checkDocument: false
         };
         let thirdParty = 'no';
-
-        function switchRoute(route) {
-            currentRoute = route;
-            currentScreen = 1;
-            
-            // タブの更新
-            document.querySelectorAll('.route-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`.route-tab.${route}`).classList.add('active');
-            
-            // オプション選択の更新
-            if (route === 'electronic') {
-                selectOption('electronic');
-            } else {
-                selectOption('postal');
-            }
-            
-            updateUI();
-            window.scrollTo(0, 0);
-        }
 
         function updateUI() {
             // 全画面を非表示
@@ -1588,7 +1493,6 @@
         function nextScreen() {
             if (currentScreen === 1 && selectedOption === 'postal') {
                 currentRoute = 'postal';
-                switchRoute('postal');
                 currentScreen = 2;
                 updateUI();
                 window.scrollTo(0, 0);
@@ -1624,7 +1528,9 @@
                 currentScreen--;
                 if (currentScreen === 1) {
                     currentRoute = 'electronic';
-                    switchRoute('electronic');
+                    selectedOption = 'electronic';
+                    document.getElementById('optionElectronic').classList.add('selected');
+                    document.getElementById('optionPostal').classList.remove('selected');
                 }
                 updateUI();
                 window.scrollTo(0, 0);
