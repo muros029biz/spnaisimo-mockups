@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanisimo 購入フロー（特商法電子交付対応）</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #1a365d;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #1a365d;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .legal-note {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .legal-note-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+        .legal-note p {
+            color: #78350f;
+            font-size: 0.9rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+        }
+        tr:hover {
+            background: #f8fafc;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .required-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        .optional-badge {
+            display: inline-block;
+            background: #94a3b8;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+        .reference-section {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+        .reference-section .section-title {
+            color: #166534;
+            border-bottom-color: #bbf7d0;
+        }
+        footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Spanisimo 購入フロー</h1>
+            <p class="subtitle">特定商取引法 電子交付対応版（2023年6月施行ルール準拠）</p>
+            <div class="meta-info">
+                <span>📅 作成日: 2026年1月30日</span>
+                <span>📋 対象商品: 90日間買い切りパック（96,800円）</span>
+                <span>⚖️ 法的分類: 特定継続的役務提供（オンライン完結型）</span>
+            </div>
+        </header>
+
+        <!-- メインフロー図 -->
+        <div class="section">
+            <h2 class="section-title">📊 購入フロー全体図</h2>
+            <div class="mermaid">
+flowchart TD
+    subgraph LP["商品ページ（LP）"]
+        A[商品説明・料金表示]
+    end
+
+    subgraph CHOICE["Step 1: 交付方法の選択"]
+        B{書面交付方法を選択<br/>電子交付→すぐ開始可能<br/>郵送→届いてから振込}
+    end
+
+    subgraph ELECTRONIC["電子交付ルート"]
+        C[Step 2: 説明・確認画面<br/>法定4項目の説明<br/>適合性確認<br/>第三者送信の確認]
+        D[Step 3: 承諾取得<br/>氏名入力＋理解した旨を記入]
+        E[Step 4: 概要書面の提示<br/>PDF表示＋ダウンロード]
+        F[Step 5: 承諾控えメール送信<br/>※決済前に自動送信]
+        G[Step 6: PayPal決済]
+        H[Step 7: 契約書面PDF送信<br/>※第三者にも同時送信]
+        I[Step 8: 到達確認<br/>閲覧できたか確認]
+        J[完了<br/>レッスン開始可能]
+    end
+
+    subgraph POSTAL["郵送ルート"]
+        Z1[住所入力フォーム]
+        Z2[概要書面・契約書面を郵送]
+        Z3[届いたら銀行振込案内]
+        Z4[入金確認後<br/>アカウント発行]
+    end
+
+    A --> B
+    B -->|電子交付を希望| C
+    B -->|郵送を希望| Z1
+
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+
+    Z1 --> Z2
+    Z2 --> Z3
+    Z3 --> Z4
+
+    style A fill:#e0f2fe,stroke:#0284c7
+    style B fill:#fef3c7,stroke:#f59e0b
+    style C fill:#dbeafe,stroke:#3b82f6
+    style D fill:#fce7f3,stroke:#ec4899
+    style E fill:#dbeafe,stroke:#3b82f6
+    style F fill:#d1fae5,stroke:#10b981
+    style G fill:#fef3c7,stroke:#f59e0b
+    style H fill:#d1fae5,stroke:#10b981
+    style I fill:#ede9fe,stroke:#8b5cf6
+    style J fill:#d1fae5,stroke:#10b981
+    style Z1 fill:#f1f5f9,stroke:#64748b
+    style Z2 fill:#f1f5f9,stroke:#64748b
+    style Z3 fill:#f1f5f9,stroke:#64748b
+    style Z4 fill:#f1f5f9,stroke:#64748b
+            </div>
+        </div>
+
+        <!-- 法的根拠 -->
+        <div class="legal-note">
+            <div class="legal-note-title">⚖️ 法的根拠</div>
+            <p>
+                特定商取引法第42条、施行令第4条、施行規則第99条第8項第2号に基づく。<br>
+                オンライン完結型の特定継続的役務提供のため、承諾控えの電子交付が認められる。
+            </p>
+        </div>
+
+        <!-- 各ステップの詳細 -->
+        <div class="section">
+            <h2 class="section-title">📝 各ステップの詳細</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 180px;">ステップ</th>
+                        <th>実装内容</th>
+                        <th style="width: 200px;">法的根拠</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="step-number">1</span>交付方法の選択</td>
+                        <td>
+                            ラジオボタンで選択<br><br>
+                            <strong>◉ 電子交付（PDF）を希望する</strong><br>
+                            　お申込みおよびお支払い完了後すぐにレッスン予約が可能です。<br><br>
+                            <strong>○ 郵送での交付を希望する</strong><br>
+                            　書面の到着まで3〜5営業日かかります。届いた後にお振込みいただき、<br>
+                            　ご入金確認後にレッスン予約が可能になります。
+                        </td>
+                        <td>施行規則第18条第9号イ<br>（希望しない者への強制禁止）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">2</span>説明・確認<span class="required-badge">法定必須</span></td>
+                        <td>
+                            <strong>説明4項目（平易な表現で）:</strong><br>
+                            ① 承諾しなければ紙の書面が届く<br>
+                            ② 電子交付される内容は重要書類である<br>
+                            ③ PDF到達日から8日間クーリングオフ可能<br>
+                            ④ 4.5インチ以上の画面で自分で操作できる方のみ<br><br>
+                            <strong>適合性確認3項目:</strong><br>
+                            ① 操作能力・日常的使用の確認<br>
+                            ② セキュリティ確保の確認<br>
+                            ③ 第三者への同時送信の希望確認
+                        </td>
+                        <td>施行規則第10条第1項〜第4項<br>施行規則第99条</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">3</span>承諾取得<span class="required-badge">法定必須</span></td>
+                        <td>
+                            <strong>チェックボックスのみは不可</strong><br>
+                            以下が必須：<br>
+                            ・氏名のフルネーム入力<br>
+                            ・「説明内容を理解した」旨の記入
+                        </td>
+                        <td>施行規則第10条第5項<br>（記号の記入のみは禁止）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">4</span>概要書面の提示<span class="required-badge">法定必須</span></td>
+                        <td>
+                            ・画面上でスクロール表示<br>
+                            ・PDFダウンロードリンク<br>
+                            ・「確認しました」チェック（決済ボタン活性化条件）
+                        </td>
+                        <td>法第42条第1項<br>（契約締結前の交付義務）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">5</span>承諾控え送信<span class="required-badge">法定必須</span></td>
+                        <td>
+                            <strong>決済前に自動送信</strong><br>
+                            ・承諾日時<br>
+                            ・交付方法（PDFメール添付）<br>
+                            ・対象書面（概要書面、契約書面）
+                        </td>
+                        <td>施行規則第99条第7項・第8項<br>（オンライン完結型は電子でOK）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">6</span>PayPal決済</td>
+                        <td>
+                            ・自社サイト→PayPal決済画面へ遷移<br>
+                            ・Webhook等で決済完了通知を受信
+                        </td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">7</span>契約書面送信<span class="required-badge">法定必須</span></td>
+                        <td>
+                            ・決済完了をトリガーに即時送信<br>
+                            ・PDF添付メール<br>
+                            ・クーリングオフ案内を本文に記載<br>
+                            ・第三者希望時は同時送信
+                        </td>
+                        <td>法第42条第2項・第3項<br>施行規則第10条第6項<br>（第三者への同時送信）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">8</span>到達確認<span class="required-badge">法定必須</span></td>
+                        <td>
+                            以下のいずれかの方法：<br>
+                            ・確認メール送信（開けたか/閲覧できたか）<br>
+                            ・完了画面で金額入力による確認
+                        </td>
+                        <td>施行令第4条第3項<br>施行規則第12条</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mermaidコード（エンジニア向け） -->
+        <div class="section">
+            <h2 class="section-title">💻 Mermaid記法（コピー用）</h2>
+            <div class="code-block">flowchart TD
+    subgraph LP["商品ページ（LP）"]
+        A[商品説明・料金表示]
+    end
+
+    subgraph CHOICE["Step 1: 交付方法の選択"]
+        B{書面交付方法を選択}
+    end
+
+    subgraph ELECTRONIC["電子交付ルート"]
+        C[Step 2: 説明・確認画面]
+        D[Step 3: 承諾取得 - 氏名入力必須]
+        E[Step 4: 概要書面の提示]
+        F[Step 5: 承諾控えメール送信]
+        G[Step 6: PayPal決済]
+        H[Step 7: 契約書面PDF送信]
+        I[Step 8: 到達確認]
+        J[完了]
+    end
+
+    subgraph POSTAL["郵送ルート"]
+        Z1[住所入力フォーム]
+        Z2[書面郵送]
+        Z3[振込案内]
+        Z4[アカウント発行]
+    end
+
+    A --> B
+    B -->|電子交付| C
+    B -->|郵送| Z1
+
+    C --> D --> E --> F --> G --> H --> I --> J
+    Z1 --> Z2 --> Z3 --> Z4</div>
+        </div>
+
+        <!-- 禁止事項 -->
+        <div class="section reference-section">
+            <h2 class="section-title">🚫 禁止事項（施行規則第18条第9号）</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>禁止行為</th>
+                        <th>具体例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>イ：希望しない者への強制</td>
+                        <td>「紙で受け取りたい」と言った人に電子交付の手続きを進める</td>
+                    </tr>
+                    <tr>
+                        <td>ロ：不実告知</td>
+                        <td>「当社は電子交付に一本化しています」と虚偽の説明をする</td>
+                    </tr>
+                    <tr>
+                        <td>ニ：財産上の利益供与</td>
+                        <td>「電子交付なら100円値引き」</td>
+                    </tr>
+                    <tr>
+                        <td>ホ：紙交付への不利益</td>
+                        <td>「郵送の場合は送料500円いただきます」</td>
+                    </tr>
+                    <tr>
+                        <td>ト：適合性確認なしの提供</td>
+                        <td>4.5インチ未満の端末しか持たない人に電子交付する</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 参照法令 -->
+        <div class="section">
+            <h2 class="section-title">📚 参照法令・ガイドライン</h2>
+            <ul style="padding-left: 20px;">
+                <li>特定商取引に関する法律（昭和51年法律第57号）第42条</li>
+                <li>特定商取引に関する法律施行令 第4条</li>
+                <li>特定商取引に関する法律施行規則 第8条〜第13条、第99条</li>
+                <li>消費者庁「契約書面等に記載すべき事項の電磁的方法による提供に係るガイドライン」（2023年4月21日）</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Spanisimo / 特定継続的役務提供（オンライン語学）電子交付フロー</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#dbeafe',
+                primaryTextColor: '#1e40af',
+                primaryBorderColor: '#3b82f6',
+                lineColor: '#64748b',
+                secondaryColor: '#f1f5f9',
+                tertiaryColor: '#fef3c7'
+            },
+            flowchart: {
+                curve: 'basis',
+                padding: 20
+            }
+        });
+    </script>
+</body>
+</html>
