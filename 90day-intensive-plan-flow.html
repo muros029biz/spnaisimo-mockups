@@ -44,6 +44,10 @@
             font-weight: 600;
         }
 
+        .nav-step.postal {
+            color: #27ae60;
+        }
+
         /* プログレスバー */
         .progress-container {
             position: fixed;
@@ -59,6 +63,10 @@
             height: 100%;
             background: linear-gradient(90deg, #3498db, #e67e22);
             transition: width 0.3s ease;
+        }
+
+        .progress-bar.postal {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
         }
 
         /* 画面コンテナ */
@@ -174,6 +182,10 @@
             border-bottom: 2px solid #3498db;
         }
 
+        .section-title.postal {
+            border-bottom-color: #27ae60;
+        }
+
         /* 選択肢カード */
         .option-card {
             background: white;
@@ -267,6 +279,11 @@
             margin-bottom: 20px;
         }
 
+        .info-box.green {
+            background: #e8f5e9;
+            border-color: #a5d6a7;
+        }
+
         .info-box-title {
             font-size: 0.9rem;
             font-weight: 600;
@@ -279,6 +296,10 @@
         .info-box-title::before {
             content: 'ℹ️';
             margin-right: 8px;
+        }
+
+        .info-box.green .info-box-title {
+            color: #2e7d32;
         }
 
         .info-box-content {
@@ -430,6 +451,19 @@
             color: #aaa;
         }
 
+        .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-row .form-group.small {
+            flex: 0 0 120px;
+        }
+
         /* 第三者送信 */
         .third-party-section {
             background: #f9f9f9;
@@ -556,6 +590,10 @@
             font-size: 2.5rem;
         }
 
+        .complete-icon.postal {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
         .complete-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -580,11 +618,20 @@
             margin-bottom: 24px;
         }
 
+        .complete-info-box.blue {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+
         .complete-info-title {
             font-size: 0.9rem;
             font-weight: 600;
             color: #2e7d32;
             margin-bottom: 12px;
+        }
+
+        .complete-info-box.blue .complete-info-title {
+            color: #1565c0;
         }
 
         .complete-info-item {
@@ -682,6 +729,67 @@
             display: block;
         }
 
+        /* 郵送フロー専用 */
+        .postal-steps {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .postal-step {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .postal-step:last-child {
+            border-bottom: none;
+        }
+
+        .postal-step-number {
+            width: 32px;
+            height: 32px;
+            background: #27ae60;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .postal-step-content {
+            flex: 1;
+        }
+
+        .postal-step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .postal-step-desc {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .email-highlight {
+            background: #e3f2fd;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .email-highlight a {
+            color: #1565c0;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
         /* フッターボタン */
         .footer-buttons {
             background: white;
@@ -730,6 +838,14 @@
             box-shadow: none;
         }
 
+        .btn-primary.postal {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+        }
+
+        .btn-primary.postal:hover {
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
         .btn-full {
             flex: none;
             width: 100%;
@@ -766,6 +882,51 @@
         .mockup-dot.active {
             background: #e67e22;
         }
+
+        .mockup-dot.postal {
+            background: #27ae60;
+        }
+
+        /* ルート切替タブ */
+        .route-tabs {
+            position: fixed;
+            top: 52px;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            z-index: 998;
+        }
+
+        .route-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .route-tab.electronic {
+            color: #3498db;
+        }
+
+        .route-tab.electronic.active {
+            border-bottom-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .route-tab.postal {
+            color: #27ae60;
+        }
+
+        .route-tab.postal.active {
+            border-bottom-color: #27ae60;
+            background: #e8f5e9;
+        }
     </style>
 </head>
 <body>
@@ -780,6 +941,14 @@
         <div class="progress-bar" id="progressBar" style="width: 20%"></div>
     </div>
 
+    <!-- ルート切替タブ -->
+    <div class="route-tabs">
+        <div class="route-tab electronic active" onclick="switchRoute('electronic')">📄 電子交付ルート</div>
+        <div class="route-tab postal" onclick="switchRoute('postal')">📮 郵送ルート</div>
+    </div>
+
+    <!-- ========== 電子交付ルート ========== -->
+    
     <!-- 画面1: LP + 交付方法選択 -->
     <div class="screen active" id="screen1">
         <div class="lp-header">
@@ -834,7 +1003,7 @@
         </div>
     </div>
 
-    <!-- 画面2: 説明・確認 + 承諾取得 -->
+    <!-- 電子: 画面2 - 説明・確認 + 承諾取得 -->
     <div class="screen" id="screen2">
         <div class="content-area">
             <h2 class="section-title">電子交付についてのご説明</h2>
@@ -903,7 +1072,7 @@
         </div>
     </div>
 
-    <!-- 画面3: 概要書面の提示 -->
+    <!-- 電子: 画面3 - 概要書面の提示 -->
     <div class="screen" id="screen3">
         <div class="content-area">
             <h2 class="section-title">重要事項説明書（概要書面）</h2>
@@ -958,7 +1127,7 @@
                         <div class="document-section-title">6. クーリングオフについて</div>
                         <p>契約書面を受領した日から8日間は、書面またはメールにより契約を解除（クーリングオフ）することができます。<br><br>
                         クーリングオフの連絡先：<br>
-                        メール：support@spani-simo.com</p>
+                        メール：support-jp@spanisimo.com</p>
                     </div>
                     
                     <div class="document-section">
@@ -984,13 +1153,13 @@
         </div>
     </div>
 
-    <!-- 画面4: 決済確認 -->
+    <!-- 電子: 画面4 - 決済確認 -->
     <div class="screen" id="screen4">
         <div class="content-area">
             <h2 class="section-title">お申込み内容の確認</h2>
 
-            <div class="complete-info-box" style="background: #e3f2fd; border-color: #90caf9;">
-                <div class="complete-info-title" style="color: #1565c0;">ご購入内容</div>
+            <div class="complete-info-box blue">
+                <div class="complete-info-title">ご購入内容</div>
                 <div class="complete-info-item">
                     <span class="complete-info-label">プラン</span>
                     <span class="complete-info-value">短期集中プラン</span>
@@ -1026,12 +1195,12 @@
 
             <div class="footer-buttons">
                 <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
-                <button class="btn btn-primary" style="background: linear-gradient(135deg, #0070ba, #003087);" onclick="nextScreen()">PayPalで決済する</button>
+                <button class="btn btn-primary" onclick="nextScreen()" style="background: linear-gradient(135deg, #0070ba, #003087);">PayPalで決済する</button>
             </div>
         </div>
     </div>
 
-    <!-- 画面5: 完了 -->
+    <!-- 電子: 画面5 - 完了 -->
     <div class="screen" id="screen5">
         <div class="content-area">
             <div class="complete-icon">✓</div>
@@ -1053,7 +1222,7 @@
                 </div>
                 <div class="complete-info-item">
                     <span class="complete-info-label">有効期限</span>
-                    <span class="complete-info-value">2026年4月30日まで</span>
+                    <span class="complete-info-value">2026年5月3日まで</span>
                 </div>
                 <div class="complete-info-item">
                     <span class="complete-info-label">お支払い金額</span>
@@ -1079,7 +1248,169 @@
             <div style="background: #e3f2fd; border-radius: 8px; padding: 16px;">
                 <p style="font-size: 0.9rem; color: #1565c0; font-weight: 600; margin-bottom: 8px;">📅 クーリングオフ期間</p>
                 <p style="font-size: 0.85rem; color: #666;">
-                    契約書面のメールを受信した本日から<strong>8日間</strong>（2026年2月7日まで）は、契約を解除することができます。
+                    契約書面のメールを受信した本日から<strong>8日間</strong>（2026年2月10日まで）は、契約を解除することができます。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 郵送ルート ========== -->
+
+    <!-- 郵送: 画面2 - 住所入力 -->
+    <div class="screen" id="postal-screen2">
+        <div class="content-area">
+            <h2 class="section-title postal">書面の郵送先をご入力ください</h2>
+
+            <div class="info-box green">
+                <div class="info-box-title">郵送での交付について</div>
+                <div class="info-box-content">
+                    契約に関する重要書類（概要書面・契約書面）を郵送いたします。<br>
+                    書面到着後、記載の口座にお振込みください。
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">お名前<span class="required">*</span></label>
+                <input type="text" class="form-input" id="postalName" placeholder="例：山田 太郎" oninput="checkPostalForm()">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">郵便番号<span class="required">*</span></label>
+                <input type="text" class="form-input" id="postalZip" placeholder="例：123-4567" oninput="checkPostalForm()">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">都道府県<span class="required">*</span></label>
+                <input type="text" class="form-input" id="postalPref" placeholder="例：東京都" oninput="checkPostalForm()">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">市区町村・番地<span class="required">*</span></label>
+                <input type="text" class="form-input" id="postalCity" placeholder="例：渋谷区渋谷1-2-3" oninput="checkPostalForm()">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">建物名・部屋番号</label>
+                <input type="text" class="form-input" id="postalBuilding" placeholder="例：○○マンション 101号室">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">電話番号<span class="required">*</span></label>
+                <input type="tel" class="form-input" id="postalPhone" placeholder="例：090-1234-5678" oninput="checkPostalForm()">
+            </div>
+
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevPostalScreen()">戻る</button>
+                <button class="btn btn-primary postal" id="btnPostalNext2" onclick="nextPostalScreen()" disabled>次へ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 郵送: 画面3 - 申込内容確認 -->
+    <div class="screen" id="postal-screen3">
+        <div class="content-area">
+            <h2 class="section-title postal">お申込み内容の確認</h2>
+
+            <div class="complete-info-box blue">
+                <div class="complete-info-title">ご購入内容</div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">プラン</span>
+                    <span class="complete-info-value">短期集中プラン</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">レッスン回数</span>
+                    <span class="complete-info-value">50分 × 100回</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">有効期間</span>
+                    <span class="complete-info-value">90日間</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">お支払い総額</span>
+                    <span class="complete-info-value" style="color: #27ae60; font-size: 1.1rem;">96,800円（税込）</span>
+                </div>
+            </div>
+
+            <div class="complete-info-box" style="background: #f5f5f5; border-color: #e0e0e0;">
+                <div class="complete-info-title" style="color: #333;">郵送先</div>
+                <div id="postalAddressConfirm" style="font-size: 0.9rem; color: #555; line-height: 1.6;">
+                    <!-- JSで動的に表示 -->
+                </div>
+            </div>
+
+            <div class="info-box green">
+                <div class="info-box-title">お申込み後の流れ</div>
+                <div class="info-box-content">
+                    1. 書面を郵送いたします（3〜5営業日）<br>
+                    2. 届いた書面に記載の口座にお振込みください<br>
+                    3. ご入金確認後、アカウントを発行いたします
+                </div>
+            </div>
+
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevPostalScreen()">戻る</button>
+                <button class="btn btn-primary postal" onclick="nextPostalScreen()">申し込みを確定する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 郵送: 画面4 - 完了 -->
+    <div class="screen" id="postal-screen4">
+        <div class="content-area">
+            <div class="complete-icon postal">📮</div>
+            <h1 class="complete-title">お申込みを受け付けました</h1>
+            <p class="complete-message">
+                契約書面を郵送いたします。<br>
+                届きましたら、書面記載の口座にお振込みください。
+            </p>
+
+            <div class="postal-steps">
+                <div class="postal-step">
+                    <div class="postal-step-number">1</div>
+                    <div class="postal-step-content">
+                        <div class="postal-step-title">書面の郵送</div>
+                        <div class="postal-step-desc">3〜5営業日でお届けします</div>
+                    </div>
+                </div>
+                <div class="postal-step">
+                    <div class="postal-step-number">2</div>
+                    <div class="postal-step-content">
+                        <div class="postal-step-title">お振込み</div>
+                        <div class="postal-step-desc">届いた書面に記載の口座にお振込みください</div>
+                    </div>
+                </div>
+                <div class="postal-step">
+                    <div class="postal-step-number">3</div>
+                    <div class="postal-step-content">
+                        <div class="postal-step-title">ご連絡</div>
+                        <div class="postal-step-desc">お振込み完了後、メールでご一報ください</div>
+                    </div>
+                </div>
+                <div class="postal-step">
+                    <div class="postal-step-number">4</div>
+                    <div class="postal-step-content">
+                        <div class="postal-step-title">アカウント発行</div>
+                        <div class="postal-step-desc">ご入金確認後、レッスン予約が可能になります</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-highlight">
+                <p style="font-size: 0.9rem; color: #333; margin-bottom: 8px;">
+                    <strong>お振込み完了後のご連絡先</strong>
+                </p>
+                <p style="font-size: 1rem;">
+                    📧 <a href="mailto:support-jp@spanisimo.com">support-jp@spanisimo.com</a>
+                </p>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 8px;">
+                    ご一報いただけますと、スムーズにアカウントを発行できます。
+                </p>
+            </div>
+
+            <div style="background: #e3f2fd; border-radius: 8px; padding: 16px; margin-top: 24px;">
+                <p style="font-size: 0.9rem; color: #1565c0; font-weight: 600; margin-bottom: 8px;">📅 クーリングオフ期間</p>
+                <p style="font-size: 0.85rem; color: #666;">
+                    契約書面がお手元に届いた日から<strong>8日間</strong>は、契約を解除することができます。
                 </p>
             </div>
         </div>
@@ -1088,16 +1419,18 @@
     <!-- モックアップナビゲーション -->
     <div class="mockup-nav">
         <span>画面:</span>
-        <div class="mockup-dot active" onclick="goToScreen(1)"></div>
-        <div class="mockup-dot" onclick="goToScreen(2)"></div>
-        <div class="mockup-dot" onclick="goToScreen(3)"></div>
-        <div class="mockup-dot" onclick="goToScreen(4)"></div>
-        <div class="mockup-dot" onclick="goToScreen(5)"></div>
+        <div class="mockup-dot active" id="dot1" onclick="goToScreen(1)"></div>
+        <div class="mockup-dot" id="dot2" onclick="goToScreen(2)"></div>
+        <div class="mockup-dot" id="dot3" onclick="goToScreen(3)"></div>
+        <div class="mockup-dot" id="dot4" onclick="goToScreen(4)"></div>
+        <div class="mockup-dot" id="dot5" onclick="goToScreen(5)"></div>
     </div>
 
     <script>
         let currentScreen = 1;
-        const totalScreens = 5;
+        let currentRoute = 'electronic'; // 'electronic' or 'postal'
+        const totalScreensElectronic = 5;
+        const totalScreensPostal = 4;
         let selectedOption = 'electronic';
         let checks = {
             check1: false,
@@ -1106,38 +1439,113 @@
         };
         let thirdParty = 'no';
 
+        function switchRoute(route) {
+            currentRoute = route;
+            currentScreen = 1;
+            
+            // タブの更新
+            document.querySelectorAll('.route-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.route-tab.${route}`).classList.add('active');
+            
+            // オプション選択の更新
+            if (route === 'electronic') {
+                selectOption('electronic');
+            } else {
+                selectOption('postal');
+            }
+            
+            updateUI();
+            window.scrollTo(0, 0);
+        }
+
         function updateUI() {
-            // 画面表示
-            document.querySelectorAll('.screen').forEach((s, i) => {
-                s.classList.toggle('active', i + 1 === currentScreen);
+            // 全画面を非表示
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
             });
 
-            // プログレスバー
-            document.getElementById('progressBar').style.width = (currentScreen / totalScreens * 100) + '%';
+            // 現在の画面を表示
+            if (currentRoute === 'electronic') {
+                document.getElementById(`screen${currentScreen}`).classList.add('active');
+                
+                // プログレスバー
+                document.getElementById('progressBar').style.width = (currentScreen / totalScreensElectronic * 100) + '%';
+                document.getElementById('progressBar').classList.remove('postal');
+                
+                // ナビステップ
+                document.getElementById('navStep').textContent = `Step ${currentScreen}/${totalScreensElectronic}`;
+                document.getElementById('navStep').classList.remove('postal');
+                
+                // モックアップドット
+                document.querySelectorAll('.mockup-dot').forEach((dot, i) => {
+                    dot.style.display = i < totalScreensElectronic ? 'block' : 'none';
+                    dot.classList.remove('active', 'postal');
+                    if (i + 1 === currentScreen) {
+                        dot.classList.add('active');
+                    }
+                });
+            } else {
+                // 郵送ルート
+                if (currentScreen === 1) {
+                    document.getElementById('screen1').classList.add('active');
+                } else {
+                    document.getElementById(`postal-screen${currentScreen}`).classList.add('active');
+                }
+                
+                // プログレスバー
+                document.getElementById('progressBar').style.width = (currentScreen / totalScreensPostal * 100) + '%';
+                document.getElementById('progressBar').classList.add('postal');
+                
+                // ナビステップ
+                document.getElementById('navStep').textContent = `Step ${currentScreen}/${totalScreensPostal}`;
+                document.getElementById('navStep').classList.add('postal');
+                
+                // モックアップドット
+                document.querySelectorAll('.mockup-dot').forEach((dot, i) => {
+                    dot.style.display = i < totalScreensPostal ? 'block' : 'none';
+                    dot.classList.remove('active');
+                    dot.classList.add('postal');
+                    if (i + 1 === currentScreen) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
 
-            // ナビステップ
-            document.getElementById('navStep').textContent = `Step ${currentScreen}/${totalScreens}`;
-
-            // モックアップドット
-            document.querySelectorAll('.mockup-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i + 1 === currentScreen);
-            });
-
-            // 画面2のボタン状態
+            // 電子: 画面2のボタン状態
             const btnNext2 = document.getElementById('btnNext2');
             if (btnNext2) {
                 btnNext2.disabled = !checks.check1 || !checks.check2 || !document.getElementById('fullName').value.trim();
             }
 
-            // 画面3のボタン状態
+            // 電子: 画面3のボタン状態
             const btnNext3 = document.getElementById('btnNext3');
             if (btnNext3) {
                 btnNext3.disabled = !checks.checkDocument;
             }
 
-            // 名前を確認画面に反映
-            if (currentScreen === 4) {
+            // 電子: 名前を確認画面に反映
+            if (currentRoute === 'electronic' && currentScreen === 4) {
                 document.getElementById('confirmName').textContent = document.getElementById('fullName').value || '-';
+            }
+
+            // 郵送: 住所を確認画面に反映
+            if (currentRoute === 'postal' && currentScreen === 3) {
+                const name = document.getElementById('postalName').value;
+                const zip = document.getElementById('postalZip').value;
+                const pref = document.getElementById('postalPref').value;
+                const city = document.getElementById('postalCity').value;
+                const building = document.getElementById('postalBuilding').value;
+                const phone = document.getElementById('postalPhone').value;
+                
+                document.getElementById('postalAddressConfirm').innerHTML = `
+                    〒${zip}<br>
+                    ${pref}${city}<br>
+                    ${building ? building + '<br>' : ''}
+                    ${name} 様<br>
+                    TEL: ${phone}
+                `;
             }
         }
 
@@ -1164,11 +1572,30 @@
             updateUI();
         }
 
+        function checkPostalForm() {
+            const name = document.getElementById('postalName').value.trim();
+            const zip = document.getElementById('postalZip').value.trim();
+            const pref = document.getElementById('postalPref').value.trim();
+            const city = document.getElementById('postalCity').value.trim();
+            const phone = document.getElementById('postalPhone').value.trim();
+            
+            const btnPostalNext2 = document.getElementById('btnPostalNext2');
+            if (btnPostalNext2) {
+                btnPostalNext2.disabled = !(name && zip && pref && city && phone);
+            }
+        }
+
         function nextScreen() {
             if (currentScreen === 1 && selectedOption === 'postal') {
-                alert('郵送ルートのモックアップは準備中です');
+                currentRoute = 'postal';
+                switchRoute('postal');
+                currentScreen = 2;
+                updateUI();
+                window.scrollTo(0, 0);
                 return;
             }
+            
+            const totalScreens = currentRoute === 'electronic' ? totalScreensElectronic : totalScreensPostal;
             if (currentScreen < totalScreens) {
                 currentScreen++;
                 updateUI();
@@ -1179,6 +1606,26 @@
         function prevScreen() {
             if (currentScreen > 1) {
                 currentScreen--;
+                updateUI();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function nextPostalScreen() {
+            if (currentScreen < totalScreensPostal) {
+                currentScreen++;
+                updateUI();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevPostalScreen() {
+            if (currentScreen > 1) {
+                currentScreen--;
+                if (currentScreen === 1) {
+                    currentRoute = 'electronic';
+                    switchRoute('electronic');
+                }
                 updateUI();
                 window.scrollTo(0, 0);
             }
