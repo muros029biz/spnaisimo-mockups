@@ -161,9 +161,9 @@
             <h1>Spanisimo 購入フロー</h1>
             <p class="subtitle">特定商取引法 電子交付対応版（2023年6月施行ルール準拠）</p>
             <div class="meta-info">
-                <span>📅 作成日: 2026年1月30日</span>
-                <span>📋 対象商品: 90日間買い切りパック（96,800円）</span>
-                <span>⚖️ 法的分類: 特定継続的役務提供（オンライン完結型）</span>
+                <span>📅 更新日: 2026年2月2日</span>
+                <span>📋 対象商品: 短期集中プラン（96,800円）</span>
+                <span>⚖️ ステータス: 弁護士確認済み</span>
             </div>
         </header>
 
@@ -181,20 +181,19 @@ flowchart TD
     end
 
     subgraph ELECTRONIC["電子交付ルート"]
-        C[Step 2: 説明・確認画面<br/>法定4項目の説明<br/>適合性確認<br/>第三者送信の確認]
-        D[Step 3: 承諾取得<br/>氏名入力＋理解した旨を記入]
-        E[Step 4: 概要書面の提示<br/>PDF表示＋ダウンロード]
-        F[Step 5: 承諾控えメール送信<br/>※決済前に自動送信]
-        G[Step 6: PayPal決済]
-        H[Step 7: 契約書面PDF送信<br/>※第三者にも同時送信]
-        I[Step 8: 到達確認<br/>閲覧できたか確認]
+        C[Step 2: 説明・確認・承諾<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
+        E[Step 3: 概要書面の提示<br/>PDF表示＋ダウンロード【必須】]
+        F[Step 4: 承諾控えメール送信<br/>※決済前に自動送信]
+        G[Step 5: PayPal決済]
+        H[Step 6: 契約書面PDF送信<br/>※第三者にも同時送信]
+        I[Step 7: 到達確認<br/>金額入力で確認]
         J[完了<br/>レッスン開始可能]
     end
 
     subgraph POSTAL["郵送ルート"]
         Z1[住所入力フォーム]
         Z2[概要書面・契約書面を郵送]
-        Z3[届いたら銀行振込案内]
+        Z3[届いたらPayPal QRコードで決済]
         Z4[入金確認後<br/>アカウント発行]
     end
 
@@ -202,8 +201,7 @@ flowchart TD
     B -->|電子交付を希望| C
     B -->|郵送を希望| Z1
 
-    C --> D
-    D --> E
+    C --> E
     E --> F
     F --> G
     G --> H
@@ -217,7 +215,6 @@ flowchart TD
     style A fill:#e0f2fe,stroke:#0284c7
     style B fill:#fef3c7,stroke:#f59e0b
     style C fill:#dbeafe,stroke:#3b82f6
-    style D fill:#fce7f3,stroke:#ec4899
     style E fill:#dbeafe,stroke:#3b82f6
     style F fill:#d1fae5,stroke:#10b981
     style G fill:#fef3c7,stroke:#f59e0b
@@ -265,51 +262,42 @@ flowchart TD
                         <td>施行規則第18条第9号イ<br>（希望しない者への強制禁止）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">2</span>説明・確認<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">2</span>説明・確認・承諾<span class="required-badge">法定必須</span></td>
                         <td>
-                            <strong>説明4項目（平易な表現で）:</strong><br>
-                            ① 承諾しなければ紙の書面が届く<br>
-                            ② 電子交付される内容は重要書類である<br>
-                            ③ PDF到達日から8日間クーリングオフ可能<br>
-                            ④ 4.5インチ以上の画面で自分で操作できる方のみ<br><br>
-                            <strong>適合性確認3項目:</strong><br>
+                            <strong>説明3項目（平易な表現で）:</strong><br>
+                            ① 電子交付される内容は重要書類である<br>
+                            ② PDF到達日から8日間クーリングオフ可能<br>
+                            ③ 4.5インチ以上の画面で自分で操作できる方のみ<br><br>
+                            <strong>適合性確認（チェックボックス）:</strong><br>
                             ① 操作能力・日常的使用の確認<br>
-                            ② セキュリティ確保の確認<br>
-                            ③ 第三者への同時送信の希望確認
+                            ② セキュリティ確保の確認<br><br>
+                            <strong>第三者送信の希望確認</strong><br><br>
+                            <strong style="color: #c53030;">承諾取得（弁護士確認済み）:</strong><br>
+                            ・氏名のフルネーム入力【必須】<br>
+                            ・「理解しました」と入力【必須】
                         </td>
-                        <td>施行規則第10条第1項〜第4項<br>施行規則第99条</td>
+                        <td>施行規則第10条第1項〜第5項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">3</span>承諾取得<span class="required-badge">法定必須</span></td>
-                        <td>
-                            <strong>チェックボックスのみは不可</strong><br>
-                            以下が必須：<br>
-                            ・氏名のフルネーム入力<br>
-                            ・「説明内容を理解した」旨の記入
-                        </td>
-                        <td>施行規則第10条第5項<br>（記号の記入のみは禁止）</td>
-                    </tr>
-                    <tr>
-                        <td><span class="step-number">4</span>概要書面の提示<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">3</span>概要書面の提示<span class="required-badge">法定必須</span></td>
                         <td>
                             ・画面上でスクロール表示<br>
-                            ・PDFダウンロードリンク<br>
-                            ・「確認しました」チェック（決済ボタン活性化条件）
+                            <strong style="color: #c53030;">・PDFダウンロード【必須】（弁護士確認済み）</strong><br>
+                            ・ダウンロード後に「確認しました」チェック可能<br>
+                            ・チェック完了で決済ボタン活性化
                         </td>
                         <td>法第42条第1項<br>（契約締結前の交付義務）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">5</span>承諾控え送信<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">4</span>承諾控え送信<span class="required-badge">法定必須</span></td>
                         <td>
-                            <strong>決済前に自動送信</strong><br>
-                            ・承諾日時<br>
-                            ・交付方法（PDFメール添付）<br>
-                            ・対象書面（概要書面、契約書面）
+                            <strong>承諾後、速やかに自動送信（決済前）</strong><br>
+                            記載内容例：「お客様が契約書面の交付に代えて、メール添付のPDFファイルにより契約書面の記載事項の提供を受けることについて承諾されたため...」
                         </td>
                         <td>施行規則第99条第7項・第8項<br>（オンライン完結型は電子でOK）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">6</span>PayPal決済</td>
+                        <td><span class="step-number">5</span>PayPal決済</td>
                         <td>
                             ・自社サイト→PayPal決済画面へ遷移<br>
                             ・Webhook等で決済完了通知を受信
@@ -317,7 +305,7 @@ flowchart TD
                         <td>—</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">7</span>契約書面送信<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">6</span>契約書面送信<span class="required-badge">法定必須</span></td>
                         <td>
                             ・決済完了をトリガーに即時送信<br>
                             ・PDF添付メール<br>
@@ -327,11 +315,11 @@ flowchart TD
                         <td>法第42条第2項・第3項<br>施行規則第10条第6項<br>（第三者への同時送信）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">8</span>到達確認<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">7</span>到達確認<span class="required-badge">法定必須</span></td>
                         <td>
-                            以下のいずれかの方法：<br>
-                            ・確認メール送信（開けたか/閲覧できたか）<br>
-                            ・完了画面で金額入力による確認
+                            <strong>完了画面で金額入力による確認（弁護士確認済み）</strong><br>
+                            「契約書面に記載されているお支払い総額を入力してください」<br>
+                            → 正しい金額入力で確認完了
                         </td>
                         <td>施行令第4条第3項<br>施行規則第12条</td>
                     </tr>
@@ -352,20 +340,19 @@ flowchart TD
     end
 
     subgraph ELECTRONIC["電子交付ルート"]
-        C[Step 2: 説明・確認画面]
-        D[Step 3: 承諾取得 - 氏名入力必須]
-        E[Step 4: 概要書面の提示]
-        F[Step 5: 承諾控えメール送信]
-        G[Step 6: PayPal決済]
-        H[Step 7: 契約書面PDF送信]
-        I[Step 8: 到達確認]
+        C[Step 2: 説明・確認・承諾 - 氏名＋理解しました入力]
+        E[Step 3: 概要書面の提示 - PDFダウンロード必須]
+        F[Step 4: 承諾控えメール送信]
+        G[Step 5: PayPal決済]
+        H[Step 6: 契約書面PDF送信]
+        I[Step 7: 到達確認 - 金額入力]
         J[完了]
     end
 
     subgraph POSTAL["郵送ルート"]
         Z1[住所入力フォーム]
         Z2[書面郵送]
-        Z3[振込案内]
+        Z3[PayPal QRコード決済]
         Z4[アカウント発行]
     end
 
@@ -373,7 +360,7 @@ flowchart TD
     B -->|電子交付| C
     B -->|郵送| Z1
 
-    C --> D --> E --> F --> G --> H --> I --> J
+    C --> E --> F --> G --> H --> I --> J
     Z1 --> Z2 --> Z3 --> Z4</div>
         </div>
 
