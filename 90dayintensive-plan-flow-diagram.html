@@ -161,9 +161,9 @@
             <h1>Spanisimo 購入フロー</h1>
             <p class="subtitle">特定商取引法 電子交付対応版（2023年6月施行ルール準拠）</p>
             <div class="meta-info">
-                <span>📅 更新日: 2026年2月2日</span>
+                <span>📅 更新日: 2026年2月3日</span>
                 <span>📋 対象商品: 短期集中プラン（96,800円）</span>
-                <span>⚖️ ステータス: 弁護士確認済み</span>
+                <span>⚖️ ステータス: 弁護士確認済み + UX改善</span>
             </div>
         </header>
 
@@ -172,22 +172,30 @@
             <h2 class="section-title">📊 購入フロー全体図</h2>
             <div class="mermaid">
 flowchart TD
-    subgraph LP["商品ページ（LP）"]
-        A[商品説明・料金表示]
+    subgraph LP["マイページ"]
+        A[購入へボタン]
     end
 
-    subgraph CHOICE["Step 1: 交付方法の選択"]
-        B{書面交付方法を選択<br/>電子交付→すぐ開始可能<br/>郵送→届いてからPayPal決済}
+    subgraph INTRO["Step 0: 導入"]
+        A0[ご購入までの流れについて<br/>5ステップの説明<br/>所要時間3〜5分]
+    end
+
+    subgraph CHOICE["Step 1: 受取方法"]
+        B{書面の受け取り方法を選択<br/>電子→すぐ開始可能<br/>郵送→届くまで3〜5日}
     end
 
     subgraph ELECTRONIC["電子交付ルート"]
-        C[Step 2: 説明・確認・承諾<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
-        E[Step 3: 概要書面の提示<br/>PDF表示＋ダウンロード【必須】]
-        F[Step 4: 承諾控えメール送信<br/>※決済前に自動送信]
-        G[Step 5: PayPal決済]
-        H[Step 6: 契約書面PDF送信<br/>※第三者にも同時送信]
-        I[Step 7: 到達確認<br/>金額入力で確認]
-        J[完了<br/>レッスン開始可能]
+        C[Step 2: 重要事項の確認<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
+        E[Step 3: サービス内容の確認<br/>概要書面表示<br/>PDFダウンロード【必須】]
+        F[承諾控えメール送信<br/>※決済前に自動送信]
+        G[Step 4: お支払い<br/>PayPal決済]
+        H[契約書面PDF送信<br/>※第三者にも同時送信]
+        I[Step 5: 購入完了]
+    end
+
+    subgraph MYPAGE["マイページ"]
+        J[到達確認<br/>契約書面の金額入力]
+        K[確認完了<br/>レッスン開始可能]
     end
 
     subgraph POSTAL["郵送ルート"]
@@ -197,9 +205,10 @@ flowchart TD
         Z4[入金確認後<br/>アカウント発行]
     end
 
-    A --> B
-    B -->|電子交付を希望| C
-    B -->|郵送を希望| Z1
+    A --> A0
+    A0 --> B
+    B -->|電子で受け取る| C
+    B -->|郵送で受け取る| Z1
 
     C --> E
     E --> F
@@ -207,20 +216,23 @@ flowchart TD
     G --> H
     H --> I
     I --> J
+    J --> K
 
     Z1 --> Z2
     Z2 --> Z3
     Z3 --> Z4
 
     style A fill:#e0f2fe,stroke:#0284c7
+    style A0 fill:#f0fdf4,stroke:#22c55e
     style B fill:#fef3c7,stroke:#f59e0b
     style C fill:#dbeafe,stroke:#3b82f6
     style E fill:#dbeafe,stroke:#3b82f6
     style F fill:#d1fae5,stroke:#10b981
     style G fill:#fef3c7,stroke:#f59e0b
     style H fill:#d1fae5,stroke:#10b981
-    style I fill:#ede9fe,stroke:#8b5cf6
-    style J fill:#d1fae5,stroke:#10b981
+    style I fill:#d1fae5,stroke:#10b981
+    style J fill:#ede9fe,stroke:#8b5cf6
+    style K fill:#d1fae5,stroke:#10b981
     style Z1 fill:#f1f5f9,stroke:#64748b
     style Z2 fill:#f1f5f9,stroke:#64748b
     style Z3 fill:#f1f5f9,stroke:#64748b
@@ -250,19 +262,29 @@ flowchart TD
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="step-number">1</span>交付方法の選択</td>
+                        <td><span class="step-number">0</span>導入画面</td>
                         <td>
-                            ラジオボタンで選択<br><br>
-                            <strong>◉ 電子交付（PDF）を希望する</strong><br>
-                            　お申込みおよびお支払い完了後すぐにレッスン予約が可能です。<br><br>
-                            <strong>○ 郵送での交付を希望する</strong><br>
-                            　書面の到着まで3〜5営業日かかります。届いた後にPayPalでお支払いいただき、<br>
-                            　ご入金確認後にレッスン予約が可能になります。
+                            <strong>ご購入までの流れについて</strong><br>
+                            ・なぜステップが多いか説明（5万円超の高額商品のため法律で必要）<br>
+                            ・5つのステップの流れを案内<br>
+                            ・所要時間（3〜5分）を表示<br>
+                            ・「購入手続きを始める」ボタン
+                        </td>
+                        <td>—<br>（UX向上のため追加）</td>
+                    </tr>
+                    <tr>
+                        <td><span class="step-number">1</span>受取方法の選択</td>
+                        <td>
+                            <strong>書面の受け取り方法を選択してください</strong><br><br>
+                            <strong>◉ 電子（PDF）で受け取る</strong><br>
+                            　すぐにレッスンを開始できます<br><br>
+                            <strong>○ 郵送で受け取る</strong><br>
+                            　届くまで3〜5営業日かかります
                         </td>
                         <td>施行規則第18条第9号イ<br>（希望しない者への強制禁止）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">2</span>説明・確認・承諾<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">2</span>重要事項の確認<span class="required-badge">法定必須</span></td>
                         <td>
                             <strong>説明3項目（平易な表現で）:</strong><br>
                             ① 電子交付される内容は重要書類である<br>
@@ -271,7 +293,9 @@ flowchart TD
                             <strong>適合性確認（チェックボックス）:</strong><br>
                             ① 操作能力・日常的使用の確認<br>
                             ② セキュリティ確保の確認<br><br>
-                            <strong>第三者送信の希望確認</strong><br><br>
+                            <strong>第三者送信の希望確認</strong><br>
+                            ・「契約書面はご登録のメールアドレスにお届けします」と明記<br>
+                            ・追加で他の方にも送信するか確認<br><br>
                             <strong style="color: #c53030;">承諾取得（弁護士確認済み）:</strong><br>
                             ・氏名のフルネーム入力【必須】<br>
                             ・「理解しました」と入力【必須】
@@ -279,7 +303,7 @@ flowchart TD
                         <td>施行規則第10条第1項〜第6項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">3</span>概要書面の提示<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">3</span>サービス内容の確認<span class="required-badge">法定必須</span></td>
                         <td>
                             ・画面上でスクロール表示<br>
                             <strong style="color: #c53030;">・PDFダウンロード【必須】（弁護士確認済み）</strong><br>
@@ -289,37 +313,47 @@ flowchart TD
                         <td>法第42条第1項<br>（契約締結前の交付義務）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">4</span>承諾控え送信<span class="required-badge">法定必須</span></td>
+                        <td>承諾控え送信<span class="required-badge">法定必須</span></td>
                         <td>
                             <strong>承諾後、速やかに自動送信（決済前）</strong><br>
-                            記載内容例：「お客様が契約書面の交付に代えて、メール添付のPDFファイルにより契約書面の記載事項の提供を受けることについて承諾されたため...」
+                            ※バックエンド処理
                         </td>
-                        <td>施行規則第99条第7項・第8項<br>（オンライン完結型は電子でOK）</td>
+                        <td>施行規則第99条第7項・第8項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">5</span>PayPal決済</td>
+                        <td><span class="step-number">4</span>お支払い</td>
                         <td>
-                            ・自社サイト→PayPal決済画面へ遷移<br>
-                            ・Webhook等で決済完了通知を受信
+                            ・お支払い内容の確認画面<br>
+                            ・「PayPalで支払う」ボタン<br>
+                            ・PayPal決済画面へ遷移
                         </td>
                         <td>—</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">6</span>契約書面送信<span class="required-badge">法定必須</span></td>
+                        <td>契約書面送信<span class="required-badge">法定必須</span></td>
                         <td>
                             ・決済完了をトリガーに即時送信<br>
                             ・PDF添付メール<br>
-                            ・クーリングオフ案内を本文に記載<br>
-                            ・第三者希望時は同時送信
+                            ・第三者希望時は同時送信<br>
+                            ※バックエンド処理
                         </td>
-                        <td>法第42条第2項・第3項<br>施行規則第10条第6項<br>（第三者への同時送信）</td>
+                        <td>法第42条第2項・第3項<br>施行規則第10条第6項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">7</span>到達確認<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">5</span>購入完了</td>
                         <td>
-                            <strong>完了画面で金額入力による確認（弁護士確認済み）</strong><br>
+                            ・完了メッセージ表示<br>
+                            ・「マイページで契約書面を確認する」ボタン
+                        </td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>到達確認<span class="required-badge">法定必須</span><br><span style="font-size: 0.8rem; color: #8b5cf6;">（マイページ）</span></td>
+                        <td>
+                            <strong style="color: #c53030;">マイページで金額入力による確認</strong><br>
                             「契約書面に記載されているお支払い総額を入力してください」<br>
-                            → 正しい金額入力で確認完了
+                            → 正しい金額入力で確認完了<br>
+                            → 確認完了までレッスン予約不可
                         </td>
                         <td>施行令第4条第3項<br>施行規則第12条</td>
                     </tr>
@@ -331,37 +365,35 @@ flowchart TD
         <div class="section">
             <h2 class="section-title">💻 Mermaid記法（コピー用）</h2>
             <div class="code-block">flowchart TD
-    subgraph LP["商品ページ（LP）"]
-        A[商品説明・料金表示]
+    subgraph MYPAGE1["マイページ"]
+        A[購入へボタン]
     end
 
-    subgraph CHOICE["Step 1: 交付方法の選択"]
-        B{書面交付方法を選択}
+    subgraph INTRO["Step 0: 導入"]
+        A0[ご購入までの流れについて]
+    end
+
+    subgraph CHOICE["Step 1: 受取方法"]
+        B{書面の受け取り方法を選択}
     end
 
     subgraph ELECTRONIC["電子交付ルート"]
-        C[Step 2: 説明・確認・承諾 - 氏名＋理解しました入力]
-        E[Step 3: 概要書面の提示 - PDFダウンロード必須]
-        F[Step 4: 承諾控えメール送信]
-        G[Step 5: PayPal決済]
-        H[Step 6: 契約書面PDF送信]
-        I[Step 7: 到達確認 - 金額入力]
-        J[完了]
+        C[Step 2: 重要事項の確認]
+        E[Step 3: サービス内容の確認]
+        F[承諾控えメール送信]
+        G[Step 4: お支払い]
+        H[契約書面PDF送信]
+        I[Step 5: 購入完了]
     end
 
-    subgraph POSTAL["郵送ルート"]
-        Z1[住所入力フォーム]
-        Z2[書面郵送]
-        Z3[PayPal QRコード決済]
-        Z4[アカウント発行]
+    subgraph MYPAGE2["マイページ"]
+        J[到達確認 - 金額入力]
+        K[確認完了 - レッスン開始可能]
     end
 
-    A --> B
-    B -->|電子交付| C
-    B -->|郵送| Z1
-
-    C --> E --> F --> G --> H --> I --> J
-    Z1 --> Z2 --> Z3 --> Z4</div>
+    A --> A0 --> B
+    B -->|電子| C
+    C --> E --> F --> G --> H --> I --> J --> K</div>
         </div>
 
         <!-- 禁止事項 -->
