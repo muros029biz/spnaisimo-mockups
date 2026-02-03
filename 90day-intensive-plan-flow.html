@@ -950,9 +950,9 @@
     <div class="screen intro active" id="screen0">
         <div class="intro-header">
             <div class="intro-icon">📋</div>
-            <h1 class="intro-title">お申込みの流れについて</h1>
+            <h1 class="intro-title">ご購入までの流れについて</h1>
             <p class="intro-description">
-                短期集中プランのお申込み手順を<br>ご案内いたします
+                短期集中プランのご購入手順を<br>ご案内いたします
             </p>
         </div>
 
@@ -996,57 +996,34 @@
             </div>
 
             <div class="footer-buttons">
-                <button class="btn btn-primary btn-full" onclick="startApplication()">お申込みを始める</button>
+                <button class="btn btn-primary btn-full" onclick="startApplication()">購入手続きを始める</button>
             </div>
         </div>
     </div>
 
     <!-- ========== Step 1: 交付方法選択 ========== -->
     <div class="screen" id="screen1">
-        <div class="lp-header">
-            <div class="plan-label">DELE対策・旅行前におすすめ</div>
-            <h1 class="plan-title">短期集中プラン</h1>
-            <p class="plan-description">90日間で100回のマンツーマンレッスン</p>
-            <div class="price-box">
-                <div class="price-label">一括</div>
-                <div class="price-main">88,000<span>円</span></div>
-                <div class="price-tax">（税込 96,800円）</div>
-                <div class="price-per">880円 / 1回あたり</div>
-            </div>
-        </div>
-
-        <div class="plan-features">
-            <div class="feature-item">
-                <span class="feature-icon">✓</span>
-                <span class="feature-text">90日間の間に100回のレッスンを受講いただけます</span>
-            </div>
-            <div class="feature-item">
-                <span class="feature-icon">✓</span>
-                <span class="feature-text">月額プランと重ねてお申込みいただけます</span>
-            </div>
-            <div class="feature-item">
-                <span class="feature-icon">✓</span>
-                <span class="feature-text">レッスン予約は12時間前まで、キャンセルは10時間前まで</span>
-            </div>
-        </div>
-
         <div class="content-area">
             <h2 class="section-title">書面の受け取り方法を選択してください</h2>
+            
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
+                ご契約内容を記載した書面をお届けします。<br>受け取り方法をお選びください。
+            </p>
             
             <div class="option-card recommended selected" id="optionElectronic" onclick="selectOption('electronic')">
                 <div class="option-header">
                     <div class="option-radio"></div>
-                    <div class="option-title">電子交付（PDF）を希望する</div>
+                    <div class="option-title">電子（PDF）で受け取る</div>
                 </div>
-                <p class="option-description highlight">お申込みおよびお支払い完了後すぐにレッスン予約が可能です。</p>
+                <p class="option-description highlight">すぐにレッスンを開始できます</p>
             </div>
 
             <div class="option-card" id="optionPostal" onclick="selectOption('postal')">
                 <div class="option-header">
                     <div class="option-radio"></div>
-                    <div class="option-title">郵送での交付を希望する</div>
+                    <div class="option-title">郵送で受け取る</div>
                 </div>
-                <p class="option-description">書面の到着まで3〜5営業日かかります。届いた後にPayPalでお支払いいただき、ご入金確認後にレッスン予約が可能になります。</p>
+                <p class="option-description">届くまで3〜5営業日かかります</p>
             </div>
 
             <div class="footer-buttons">
