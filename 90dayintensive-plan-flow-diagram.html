@@ -161,7 +161,7 @@
             <h1>Spanisimo 購入フロー</h1>
             <p class="subtitle">特定商取引法 電子交付対応版（2023年6月施行ルール準拠）</p>
             <div class="meta-info">
-                <span>📅 更新日: 2026年2月3日</span>
+                <span>📅 更新日: 2026年2月4日</span>
                 <span>📋 対象商品: 短期集中プラン（96,800円）</span>
                 <span>⚖️ ステータス: 弁護士確認済み + UX改善</span>
             </div>
@@ -186,16 +186,17 @@ flowchart TD
 
     subgraph ELECTRONIC["電子交付ルート"]
         C[Step 2: 重要事項の確認<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
-        E[Step 3: サービス内容の確認<br/>概要書面表示<br/>PDFダウンロード【必須】]
+        E[Step 3: サービス内容の確認<br/>概要書面11項目表示<br/>PDFダウンロード【必須】]
         F[承諾控えメール送信<br/>※決済前に自動送信]
-        G[Step 4: お支払い<br/>PayPal決済]
-        H[契約書面PDF送信<br/>※第三者にも同時送信]
-        I[Step 5: 購入完了]
+        G[Step 4: お支払い<br/>契約条項14項目スクロール確認<br/>PayPal決済]
+        H[契約書面PDFをマイページに格納<br/>※第三者希望時はメール送信]
+        I[Step 5: 購入完了<br/>開封確認への誘導]
     end
 
-    subgraph MYPAGE["マイページ"]
-        J[到達確認<br/>契約書面の金額入力]
-        K[確認完了<br/>レッスン開始可能]
+    subgraph MYPAGE2["マイページ（開封確認）"]
+        J[契約書面PDFを開く]
+        K[確認番号を入力]
+        L[開封確認完了<br/>レッスン開始可能<br/>※クーリングオフは確認日から8日間]
     end
 
     subgraph POSTAL["郵送ルート"]
@@ -217,6 +218,7 @@ flowchart TD
     H --> I
     I --> J
     J --> K
+    K --> L
 
     Z1 --> Z2
     Z2 --> Z3
@@ -232,7 +234,8 @@ flowchart TD
     style H fill:#d1fae5,stroke:#10b981
     style I fill:#d1fae5,stroke:#10b981
     style J fill:#ede9fe,stroke:#8b5cf6
-    style K fill:#d1fae5,stroke:#10b981
+    style K fill:#ede9fe,stroke:#8b5cf6
+    style L fill:#d1fae5,stroke:#10b981
     style Z1 fill:#f1f5f9,stroke:#64748b
     style Z2 fill:#f1f5f9,stroke:#64748b
     style Z3 fill:#f1f5f9,stroke:#64748b
@@ -288,8 +291,8 @@ flowchart TD
                         <td>
                             <strong>説明3項目（平易な表現で）:</strong><br>
                             ① 電子交付される内容は重要書類である<br>
-                            ② PDF到達日から8日間クーリングオフ可能<br>
-                            ③ 4.5インチ以上の画面で自分で操作できる方のみ<br><br>
+                            ② 開封確認日から8日間クーリングオフ可能<br>
+                            ③ 4.5インチ以上（iPhone6相当以上）の画面で自分で操作できる方のみ<br><br>
                             <strong>適合性確認（チェックボックス）:</strong><br>
                             ① 操作能力・日常的使用の確認<br>
                             ② セキュリティ確保の確認<br><br>
@@ -305,10 +308,13 @@ flowchart TD
                     <tr>
                         <td><span class="step-number">3</span>サービス内容の確認<span class="required-badge">法定必須</span></td>
                         <td>
+                            <strong>概要書面11項目を表示:</strong><br>
+                            事業者情報、役務内容、購入商品、金額、支払方法、提供期間、クーリングオフ、中途解約、抗弁権、前受金保全、特約<br><br>
                             ・画面上でスクロール表示<br>
-                            <strong style="color: #c53030;">・PDFダウンロード【必須】（弁護士確認済み）</strong><br>
+                            <strong style="color: #c53030;">・PDFダウンロード【必須】</strong><br>
+                            ・末尾に承諾文言を記載<br>
                             ・ダウンロード後に「確認しました」チェック可能<br>
-                            ・チェック完了で決済ボタン活性化
+                            ・チェック完了で次へボタン活性化
                         </td>
                         <td>法第42条第1項<br>（契約締結前の交付義務）</td>
                     </tr>
@@ -321,20 +327,22 @@ flowchart TD
                         <td>施行規則第99条第7項・第8項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">4</span>お支払い</td>
+                        <td><span class="step-number">4</span>お支払い<span class="required-badge">法定必須</span></td>
                         <td>
-                            ・お支払い内容の確認画面<br>
-                            ・「PayPalで支払う」ボタン<br>
+                            <strong>契約条項14項目をスクロール表示:</strong><br>
+                            役務内容、購入商品、金額、支払方法、提供期間、クーリングオフ、中途解約、事業者情報、契約担当者、契約締結日、商品種類・数量、抗弁権、前受金保全、商品販売業者、特約<br><br>
+                            ・下までスクロールで「PayPalで支払う」ボタン活性化<br>
                             ・PayPal決済画面へ遷移
                         </td>
-                        <td>—</td>
+                        <td>法第42条第2項<br>（契約締結後の交付義務）</td>
                     </tr>
                     <tr>
-                        <td>契約書面送信<span class="required-badge">法定必須</span></td>
+                        <td>契約書面格納<span class="required-badge">法定必須</span></td>
                         <td>
-                            ・決済完了をトリガーに即時送信<br>
-                            ・PDF添付メール<br>
-                            ・第三者希望時は同時送信<br>
+                            <strong style="color: #c53030;">マイページにPDF格納（メール送信ではない）</strong><br>
+                            ・決済完了をトリガーに即時格納<br>
+                            ・第三者希望時はメールでも送信<br>
+                            ・PDF末尾に確認番号を記載<br>
                             ※バックエンド処理
                         </td>
                         <td>法第42条第2項・第3項<br>施行規則第10条第6項</td>
@@ -343,17 +351,24 @@ flowchart TD
                         <td><span class="step-number">5</span>購入完了</td>
                         <td>
                             ・完了メッセージ表示<br>
-                            ・「マイページで契約書面を確認する」ボタン
+                            ・「開封確認とは？」の説明<br>
+                            ・「マイページで開封確認をする」ボタン
                         </td>
                         <td>—</td>
                     </tr>
                     <tr>
-                        <td>到達確認<span class="required-badge">法定必須</span><br><span style="font-size: 0.8rem; color: #8b5cf6;">（マイページ）</span></td>
+                        <td>開封確認<span class="required-badge">法定必須</span><br><span style="font-size: 0.8rem; color: #8b5cf6;">（マイページ）</span></td>
                         <td>
-                            <strong style="color: #c53030;">マイページで金額入力による確認</strong><br>
-                            「契約書面に記載されているお支払い総額を入力してください」<br>
-                            → 正しい金額入力で確認完了<br>
-                            → 確認完了までレッスン予約不可
+                            <strong style="color: #c53030;">確認番号入力による開封確認</strong><br>
+                            ① 契約書面PDFを開く（開封日時を記録）<br>
+                            ② PDF末尾に記載の確認番号を入力<br>
+                            → 確認完了でレッスン予約可能<br>
+                            → 確認完了までレッスン予約不可<br><br>
+                            <strong>保存するタイムスタンプ（3つ）:</strong><br>
+                            ・契約書面到達日時<br>
+                            ・契約書面開封日時<br>
+                            ・開封確認日時（確認番号入力日時）<br><br>
+                            <strong style="color: #2563eb;">クーリングオフ：開封確認日から8日間</strong>
                         </td>
                         <td>施行令第4条第3項<br>施行規則第12条</td>
                     </tr>
@@ -379,21 +394,22 @@ flowchart TD
 
     subgraph ELECTRONIC["電子交付ルート"]
         C[Step 2: 重要事項の確認]
-        E[Step 3: サービス内容の確認]
+        E[Step 3: サービス内容の確認 - 概要書面11項目]
         F[承諾控えメール送信]
-        G[Step 4: お支払い]
-        H[契約書面PDF送信]
+        G[Step 4: お支払い - 契約条項14項目スクロール]
+        H[契約書面PDFをマイページに格納]
         I[Step 5: 購入完了]
     end
 
-    subgraph MYPAGE2["マイページ"]
-        J[到達確認 - 金額入力]
-        K[確認完了 - レッスン開始可能]
+    subgraph MYPAGE2["マイページ（開封確認）"]
+        J[契約書面PDFを開く]
+        K[確認番号を入力]
+        L[開封確認完了 - レッスン開始可能]
     end
 
     A --> A0 --> B
     B -->|電子| C
-    C --> E --> F --> G --> H --> I --> J --> K</div>
+    C --> E --> F --> G --> H --> I --> J --> K --> L</div>
         </div>
 
         <!-- 禁止事項 -->
