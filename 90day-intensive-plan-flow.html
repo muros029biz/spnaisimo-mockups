@@ -991,8 +991,8 @@
                 </div>
             </div>
 
-            <div class="intro-time">
-                ⏱️ 通常 <strong>3〜5分</strong> で完了します
+            <div class="intro-time" style="background: #e0f2fe; padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+                <span style="font-size: 1.3rem; font-weight: 600; color: #0369a1;">⏱️ 通常 3〜5分 で完了します</span>
             </div>
 
             <div class="footer-buttons">
@@ -1054,7 +1054,7 @@
                 <div class="explanation-item">
                     <div class="explanation-number">3</div>
                     <div class="explanation-text">
-                        <strong>4.5インチ以上の画面</strong>をお持ちで、ご自身でPDFを保存・閲覧できる方のみ電子交付を受けられます。
+                        <strong>4.5インチ以上の画面（iPhone6相当以上）</strong>をお持ちで、ご自身でPDFを保存・閲覧できる方のみ電子交付を受けられます。
                     </div>
                 </div>
             </div>
@@ -1144,35 +1144,61 @@
                         提供回数：50分×100回<br>
                         有効期間：90日間</p>
                     </div>
+
+                    <div class="document-section">
+                        <div class="document-section-title">3. 購入が必要な商品</div>
+                        <p>（特になし）</p>
+                    </div>
                     
                     <div class="document-section">
-                        <div class="document-section-title">3. 料金</div>
+                        <div class="document-section-title">4. お支払い金額</div>
                         <p>販売価格：88,000円（税抜）<br>
                         消費税：8,800円<br>
                         <strong>お支払い総額：96,800円（税込）</strong></p>
                     </div>
                     
                     <div class="document-section">
-                        <div class="document-section-title">4. 支払方法・時期</div>
+                        <div class="document-section-title">5. 支払時期・方法</div>
                         <p>支払方法：PayPal決済<br>
                         支払時期：お申込み時に一括前払い</p>
                     </div>
                     
                     <div class="document-section">
-                        <div class="document-section-title">5. 役務提供期間</div>
+                        <div class="document-section-title">6. 役務提供期間</div>
                         <p>お支払い完了日から90日間</p>
                     </div>
                     
                     <div class="document-section">
-                        <div class="document-section-title">6. クーリングオフについて</div>
-                        <p>契約書面を受領した日から8日間は、書面またはメールにより契約を解除（クーリングオフ）することができます。<br><br>
+                        <div class="document-section-title">7. クーリングオフについて</div>
+                        <p>契約書面の開封確認日から8日間は、書面またはメールにより契約を解除（クーリングオフ）することができます。<br><br>
                         クーリングオフの連絡先：<br>
                         メール：support-jp@spanisimo.com</p>
                     </div>
                     
                     <div class="document-section">
-                        <div class="document-section-title">7. 中途解約について</div>
+                        <div class="document-section-title">8. 中途解約について</div>
                         <p>クーリングオフ期間経過後も、将来に向かって契約を解除することができます。この場合、所定の計算方法により精算いたします。</p>
+                    </div>
+
+                    <div class="document-section">
+                        <div class="document-section-title">9. 抗弁権の接続について</div>
+                        <p>（特になし）</p>
+                    </div>
+
+                    <div class="document-section">
+                        <div class="document-section-title">10. 前受金の保全について</div>
+                        <p>（特になし）</p>
+                    </div>
+
+                    <div class="document-section">
+                        <div class="document-section-title">11. 特約</div>
+                        <p>（特になし）</p>
+                    </div>
+
+                    <div class="document-section" style="background: #f0f9ff; padding: 12px; border-radius: 8px; margin-top: 20px;">
+                        <p style="font-size: 0.85rem; color: #1e40af;">
+                        お客様は、契約書面を当社ウェブサイトからPDFでダウンロードして受け取ることに同意されました。
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1189,7 +1215,7 @@
 
             <div class="footer-buttons">
                 <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
-                <button class="btn btn-primary" id="btnNext3" onclick="nextScreen()" disabled>決済に進む</button>
+                <button class="btn btn-primary" id="btnNext3" onclick="nextScreen()" disabled>次へ</button>
             </div>
         </div>
     </div>
@@ -1219,24 +1245,103 @@
                 </div>
             </div>
 
-            <div class="info-box">
-                <div class="info-box-title">電子交付について</div>
-                <div class="info-box-content">
-                    <p>・概要書面：お申込み画面で確認済み</p>
-                    <p>・契約書面：決済完了後にメールでお送りします</p>
-                    <p>・承諾者：<span id="confirmName">-</span></p>
-                </div>
-            </div>
+            <div style="margin-top: 24px;">
+                <h3 style="font-size: 0.95rem; color: #333; margin-bottom: 12px;">契約条項は以下となりますのでご確認ください</h3>
+                <p style="font-size: 0.8rem; color: #e67e22; margin-bottom: 8px;">※ 下までスクロールすると「PayPalで支払う」ボタンが押せるようになります</p>
+                
+                <div class="document-preview" id="contractTerms" onscroll="checkContractScroll()" style="max-height: 300px;">
+                    <div class="document-content">
+                        <div class="document-section">
+                            <div class="document-section-title">1. 役務の内容</div>
+                            <p>サービス名：短期集中プラン<br>
+                            内容：オンラインスペイン語マンツーマンレッスン<br>
+                            提供回数：50分×100回</p>
+                        </div>
 
-            <div style="background: #fff3e0; border-radius: 8px; padding: 16px; margin-top: 20px;">
-                <p style="font-size: 0.85rem; color: #e65100; text-align: center;">
-                    「PayPalで支払う」をクリックすると決済画面に進みます
-                </p>
+                        <div class="document-section">
+                            <div class="document-section-title">2. 購入が必要な商品</div>
+                            <p>（特になし）</p>
+                        </div>
+                        
+                        <div class="document-section">
+                            <div class="document-section-title">3. お支払い金額</div>
+                            <p>販売価格：88,000円（税抜）<br>
+                            消費税：8,800円<br>
+                            <strong>お支払い総額：96,800円（税込）</strong></p>
+                        </div>
+                        
+                        <div class="document-section">
+                            <div class="document-section-title">4. 支払時期・方法</div>
+                            <p>支払方法：PayPal決済<br>
+                            支払時期：お申込み時に一括前払い</p>
+                        </div>
+                        
+                        <div class="document-section">
+                            <div class="document-section-title">5. 役務提供期間</div>
+                            <p>お支払い完了日から90日間</p>
+                        </div>
+                        
+                        <div class="document-section">
+                            <div class="document-section-title">6. クーリングオフについて</div>
+                            <p>契約書面の開封確認日から8日間は、書面またはメールにより契約を解除（クーリングオフ）することができます。<br><br>
+                            クーリングオフの連絡先：<br>
+                            メール：support-jp@spanisimo.com</p>
+                        </div>
+                        
+                        <div class="document-section">
+                            <div class="document-section-title">7. 中途解約について</div>
+                            <p>クーリングオフ期間経過後も、将来に向かって契約を解除することができます。この場合、所定の計算方法により精算いたします。</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">8. 事業者情報</div>
+                            <p>事業者名：株式会社Spanisimo<br>
+                            所在地：〒XXX-XXXX 東京都○○区○○ X-X-X<br>
+                            電話番号：03-XXXX-XXXX<br>
+                            代表者：○○ ○○</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">9. 契約担当者</div>
+                            <p>（オンライン契約のため記載なし）</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">10. 契約締結年月日</div>
+                            <p>【決済完了日が自動記載されます】</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">11. 購入が必要な商品の種類・数量</div>
+                            <p>（特になし）</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">12. 抗弁権の接続について</div>
+                            <p>（特になし）</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">13. 前受金の保全措置</div>
+                            <p>（特になし）</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">14. 商品販売業者</div>
+                            <p>（特になし）</p>
+                        </div>
+
+                        <div class="document-section">
+                            <div class="document-section-title">15. 特約</div>
+                            <p>（特になし）</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="footer-buttons">
                 <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
-                <button class="btn btn-primary" onclick="nextScreen()">PayPalで支払う</button>
+                <button class="btn btn-primary" id="btnNext4" onclick="nextScreen()" disabled>PayPalで支払う</button>
             </div>
         </div>
     </div>
@@ -1245,43 +1350,28 @@
     <div class="screen" id="screen5">
         <div class="complete-header">
             <div class="complete-icon">✓</div>
-            <h1 class="complete-title">お申込みが完了しました</h1>
+            <h1 class="complete-title">ご購入ありがとうございます</h1>
             <p class="complete-message">
-                ご登録のメールアドレスに契約書面をお送りしました。<br>
-                ご確認をお願いいたします。
+                契約書面をマイページにご用意しました。
             </p>
+            <div style="background: rgba(255,255,255,0.95); color: #c53030; padding: 12px 20px; border-radius: 8px; margin-top: 16px; font-weight: 600; font-size: 1rem;">
+                ⚠️ レッスンを開始するために開封確認をお願いします
+            </div>
         </div>
 
         <div class="content-area">
-            <div class="complete-info-box">
-                <div class="complete-info-title">ご購入内容</div>
-                <div class="complete-info-item">
-                    <span class="complete-info-label">プラン</span>
-                    <span class="complete-info-value">短期集中プラン</span>
+            <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 1rem; color: #333; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    📋 開封確認とは？
+                </h3>
+                <div style="font-size: 0.9rem; color: #555; line-height: 1.8;">
+                    <p style="margin-bottom: 12px;">マイページで契約書面PDFを開き、<br>記載の<strong>確認番号を入力するだけ</strong>です。</p>
+                    <p style="color: #e67e22; font-weight: 600;">✓ 開封確認後、レッスン予約ができるようになります</p>
                 </div>
-                <div class="complete-info-item">
-                    <span class="complete-info-label">レッスン回数</span>
-                    <span class="complete-info-value">50分 × 100回</span>
-                </div>
-                <div class="complete-info-item">
-                    <span class="complete-info-label">有効期間</span>
-                    <span class="complete-info-value">90日間</span>
-                </div>
-                <div class="complete-info-item">
-                    <span class="complete-info-label">お支払い総額</span>
-                    <span class="complete-info-value" style="color: #27ae60; font-size: 1.1rem;">96,800円（税込）</span>
-                </div>
-            </div>
-
-            <div style="background: #e3f2fd; border-radius: 8px; padding: 16px; margin-top: 24px;">
-                <p style="font-size: 0.9rem; color: #1565c0; font-weight: 600; margin-bottom: 8px;">📅 クーリングオフ期間</p>
-                <p style="font-size: 0.85rem; color: #666;">
-                    契約書面がお手元に届いた日から<strong>8日間</strong>は、契約を解除することができます。
-                </p>
             </div>
 
             <div class="footer-buttons">
-                <button class="btn btn-primary btn-full" onclick="goToMyPage()">マイページで契約書面を確認する</button>
+                <button class="btn btn-primary btn-full" onclick="goToMyPage()">マイページで開封確認をする</button>
             </div>
         </div>
     </div>
@@ -1557,11 +1647,6 @@
                 btnNext3.disabled = !checks.checkDocument;
             }
 
-            // 電子: 名前を確認画面に反映
-            if (currentRoute === 'electronic' && currentScreen === 4) {
-                document.getElementById('confirmName').textContent = document.getElementById('fullName').value || '-';
-            }
-
             // 郵送: 住所を確認画面に反映
             if (currentRoute === 'postal' && currentScreen === 3) {
                 const name = document.getElementById('postalName').value;
@@ -1576,6 +1661,22 @@
                 address += `<br>${name} 様<br>TEL: ${phone}`;
                 
                 document.getElementById('postalAddressConfirm').innerHTML = address;
+            }
+        }
+
+        // 契約条項スクロールチェック
+        let contractScrolled = false;
+        function checkContractScroll() {
+            const container = document.getElementById('contractTerms');
+            if (container) {
+                const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 10;
+                if (isAtBottom && !contractScrolled) {
+                    contractScrolled = true;
+                    const btnNext4 = document.getElementById('btnNext4');
+                    if (btnNext4) {
+                        btnNext4.disabled = false;
+                    }
+                }
             }
         }
 
@@ -1713,7 +1814,7 @@
         }
 
         function goToMyPage() {
-            alert('マイページに遷移します（モックアップ）\n\nマイページで契約書面の到達確認（金額入力）を行います。');
+            alert('マイページに遷移します（モックアップ）\n\n【開封確認の流れ】\n1. マイページで契約書面PDFを開く\n2. PDFに記載の確認番号（357）を入力\n3. 開封確認完了 → レッスン予約可能に\n\n※クーリングオフは開封確認日から8日間');
         }
 
         // 初期化
