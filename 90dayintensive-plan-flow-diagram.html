@@ -185,12 +185,12 @@ flowchart TD
     end
 
     subgraph ELECTRONIC["電子交付ルート"]
-        C[Step 2: 重要事項の確認<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
-        E[Step 3: サービス内容の確認<br/>概要書面11項目表示<br/>PDFダウンロード【必須】]
+        C[Step 2: PDF（電子交付）で受け取る確認<br/>法定3項目の説明<br/>適合性確認<br/>第三者送信の確認<br/>氏名＋「理解しました」入力]
+        E[Step 3: 概要書面の確認<br/>概要書面11項目表示<br/>PDFダウンロード【必須】]
         F[承諾控えメール送信<br/>※決済前に自動送信]
-        G[Step 4: お支払い<br/>契約条項14項目スクロール確認<br/>PayPal決済]
+        G[Step 4: 契約内容を確認してお支払い<br/>契約条項14項目スクロール確認<br/>PayPal決済]
         H[契約書面PDFをマイページに格納<br/>※第三者希望時はメール送信]
-        I[Step 5: 購入完了<br/>開封確認への誘導]
+        I[Step 5: お支払い完了<br/>開封確認への誘導]
     end
 
     subgraph MYPAGE2["マイページ（開封確認）"]
@@ -287,7 +287,7 @@ flowchart TD
                         <td>施行規則第18条第9号イ<br>（希望しない者への強制禁止）</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">2</span>重要事項の確認<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">2</span>PDF（電子交付）で受け取る確認<span class="required-badge">法定必須</span></td>
                         <td>
                             <strong>説明3項目（平易な表現で）:</strong><br>
                             ① 電子交付される内容は重要書類である<br>
@@ -297,17 +297,20 @@ flowchart TD
                             ① 操作能力・日常的使用の確認<br>
                             ② セキュリティ確保の確認<br><br>
                             <strong>第三者送信の希望確認</strong><br>
-                            ・「契約書面はご登録のメールアドレスにお届けします」と明記<br>
-                            ・追加で他の方にも送信するか確認<br><br>
-                            <strong style="color: #c53030;">承諾取得（弁護士確認済み）:</strong><br>
+                            ・「契約書面について」の説明を先に表示<br>
+                            ・「お支払い完了後、契約内容をまとめたPDF（契約書面）をマイページにお届けします」と明記<br>
+                            ・「ご家族など、他の方にもメールで送りますか？」で確認<br><br>
+                            <strong style="color: #c53030;">PDFで受け取ることへの同意:</strong><br>
                             ・氏名のフルネーム入力【必須】<br>
                             ・「理解しました」と入力【必須】
                         </td>
                         <td>施行規則第10条第1項〜第6項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">3</span>サービス内容の確認<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">3</span>概要書面の確認<span class="required-badge">法定必須</span></td>
                         <td>
+                            <strong>概要書面とは？の説明:</strong><br>
+                            「5万円を超えるサービスをご購入いただく際、法律により事前にお渡しする書類です」<br><br>
                             <strong>概要書面11項目を表示:</strong><br>
                             事業者情報、役務内容、購入商品、金額、支払方法、提供期間、クーリングオフ、中途解約、抗弁権、前受金保全、特約<br><br>
                             ・画面上でスクロール表示<br>
@@ -327,7 +330,7 @@ flowchart TD
                         <td>施行規則第99条第7項・第8項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">4</span>お支払い<span class="required-badge">法定必須</span></td>
+                        <td><span class="step-number">4</span>契約内容を確認してお支払い<span class="required-badge">法定必須</span></td>
                         <td>
                             <strong>契約条項14項目をスクロール表示:</strong><br>
                             役務内容、購入商品、金額、支払方法、提供期間、クーリングオフ、中途解約、事業者情報、契約担当者、契約締結日、商品種類・数量、抗弁権、前受金保全、商品販売業者、特約<br><br>
@@ -348,7 +351,7 @@ flowchart TD
                         <td>法第42条第2項・第3項<br>施行規則第10条第6項</td>
                     </tr>
                     <tr>
-                        <td><span class="step-number">5</span>購入完了</td>
+                        <td><span class="step-number">5</span>お支払い完了</td>
                         <td>
                             ・完了メッセージ表示<br>
                             ・「開封確認とは？」の説明<br>
