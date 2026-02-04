@@ -866,10 +866,16 @@
             right: 0;
             background: white;
             padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
             display: flex;
             gap: 12px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             z-index: 100;
+        }
+
+        /* コンテンツエリアの下部余白 */
+        .content-area {
+            padding-bottom: 100px;
         }
 
         .btn {
@@ -950,7 +956,7 @@
     <div class="screen intro active" id="screen0">
         <div class="intro-header">
             <div class="intro-icon">📋</div>
-            <h1 class="intro-title">ご購入までの流れについて</h1>
+            <h1 class="intro-title">ご購入の流れ</h1>
             <p class="intro-description">
                 短期集中プランのご購入手順を<br>ご案内いたします
             </p>
@@ -971,23 +977,23 @@
                 
                 <div class="intro-step-item">
                     <div class="intro-step-number">1</div>
-                    <div class="intro-step-text">書面の受け取り方法を選択</div>
+                    <div class="intro-step-text">受け取り方法を選ぶ</div>
                 </div>
                 <div class="intro-step-item">
                     <div class="intro-step-number">2</div>
-                    <div class="intro-step-text">重要事項のご確認</div>
+                    <div class="intro-step-text">PDF（電子交付）で受け取る確認</div>
                 </div>
                 <div class="intro-step-item">
                     <div class="intro-step-number">3</div>
-                    <div class="intro-step-text">サービス内容のご確認</div>
+                    <div class="intro-step-text">概要書面の確認</div>
                 </div>
                 <div class="intro-step-item">
                     <div class="intro-step-number">4</div>
-                    <div class="intro-step-text">お支払い</div>
+                    <div class="intro-step-text">契約内容を確認してお支払い</div>
                 </div>
                 <div class="intro-step-item">
                     <div class="intro-step-number">5</div>
-                    <div class="intro-step-text">お申込み完了</div>
+                    <div class="intro-step-text">お支払い完了</div>
                 </div>
             </div>
 
@@ -1004,7 +1010,7 @@
     <!-- ========== Step 1: 交付方法選択 ========== -->
     <div class="screen" id="screen1">
         <div class="content-area">
-            <h2 class="section-title">書面の受け取り方法を選択してください</h2>
+            <h2 class="section-title">受け取り方法を選んでください</h2>
             
             <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">
                 ご契約内容を記載した書面をお届けします。<br>受け取り方法をお選びください。
@@ -1036,7 +1042,7 @@
     <!-- ========== Step 2: 説明・確認・承諾（電子） ========== -->
     <div class="screen" id="screen2">
         <div class="content-area">
-            <h2 class="section-title">重要事項をご確認ください</h2>
+            <h2 class="section-title">PDF（電子交付）で受け取る確認</h2>
             
             <div class="explanation-list">
                 <div class="explanation-item">
@@ -1048,7 +1054,7 @@
                 <div class="explanation-item">
                     <div class="explanation-number">2</div>
                     <div class="explanation-text">
-                        契約書面のPDFがお客様の端末に届いた日から<strong>8日間</strong>、クーリングオフが可能です。
+                        お支払い後、マイページで契約書面の開封確認をした日から<strong>8日間</strong>、クーリングオフが可能です。
                     </div>
                 </div>
                 <div class="explanation-item">
@@ -1071,14 +1077,15 @@
                 <div class="checkbox-label">端末のOS・ブラウザは最新の状態に更新されています。</div>
             </div>
 
-            <div class="third-party-section">
-                <p style="font-size: 0.85rem; color: #333; margin-bottom: 12px;">
-                    契約書面はご登録のメールアドレスにお届けします。
+            <div class="third-party-section" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee;">
+                <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: #333;">📄 契約書面について</h3>
+                <p style="font-size: 0.85rem; color: #555; margin-bottom: 16px; line-height: 1.6;">
+                    お支払い完了後、契約内容をまとめたPDF（契約書面）を<br>マイページにお届けします。
                 </p>
-                <div class="third-party-title">ご家族など、他の方にも同時に送信しますか？</div>
+                <div class="third-party-title">ご家族など、他の方にもメールで送りますか？</div>
                 <div class="third-party-options">
-                    <div class="third-party-option selected" id="thirdPartyNo" onclick="selectThirdParty('no')">送信しない</div>
-                    <div class="third-party-option" id="thirdPartyYes" onclick="selectThirdParty('yes')">送信する</div>
+                    <div class="third-party-option selected" id="thirdPartyNo" onclick="selectThirdParty('no')">送らない</div>
+                    <div class="third-party-option" id="thirdPartyYes" onclick="selectThirdParty('yes')">送る</div>
                 </div>
                 <div class="third-party-email" id="thirdPartyEmail">
                     <input type="email" class="form-input" placeholder="送信先メールアドレス">
@@ -1086,11 +1093,11 @@
             </div>
 
             <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #eee;">
-                <h3 style="font-size: 0.95rem; margin-bottom: 16px; color: #333;">電子交付への承諾</h3>
+                <h3 style="font-size: 0.95rem; margin-bottom: 16px; color: #333;">PDFで受け取ることへの同意</h3>
                 
                 <div class="info-box">
                     <div class="info-box-content">
-                        上記の説明内容を理解し、契約書面をPDFファイルのメール添付で受け取ることに承諾される場合は、以下にお名前と「理解しました」をご入力ください。
+                        上記の説明内容を理解し、契約書面をPDFで受け取ることに同意される場合は、以下にお名前と「理解しました」をご入力ください。
                     </div>
                 </div>
 
@@ -1115,12 +1122,12 @@
     <!-- ========== Step 3: 概要書面の提示（電子） ========== -->
     <div class="screen" id="screen3">
         <div class="content-area">
-            <h2 class="section-title">サービス内容をご確認ください</h2>
+            <h2 class="section-title">概要書面の確認</h2>
 
             <div class="info-box">
-                <div class="info-box-title">お申込み前に必ずご確認ください</div>
+                <div class="info-box-title">📄 概要書面とは？</div>
                 <div class="info-box-content">
-                    以下の内容をご確認の上、PDFをダウンロードしてください。
+                    5万円を超えるサービスをご購入いただく際、法律により事前にお渡しする書類です。内容を確認してPDFをダウンロードしてください。
                 </div>
             </div>
 
@@ -1223,7 +1230,7 @@
     <!-- ========== Step 4: 決済確認（電子） ========== -->
     <div class="screen" id="screen4">
         <div class="content-area">
-            <h2 class="section-title">お支払い内容をご確認ください</h2>
+            <h2 class="section-title">契約内容を確認してお支払い</h2>
 
             <div class="complete-info-box blue">
                 <div class="complete-info-title">ご購入内容</div>
@@ -1339,7 +1346,7 @@
                 </div>
             </div>
 
-            <div class="footer-buttons">
+            <div class="footer-buttons" style="padding-bottom: 40px;">
                 <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
                 <button class="btn btn-primary" id="btnNext4" onclick="nextScreen()" disabled>PayPalで支払う</button>
             </div>
@@ -1525,14 +1532,14 @@
 
         const stepNames = {
             electronic: {
-                1: '書面の受け取り方法',
-                2: '重要事項のご確認',
-                3: 'サービス内容のご確認',
-                4: 'お支払い',
-                5: 'お申込み完了'
+                1: '受け取り方法を選ぶ',
+                2: 'PDF（電子交付）で受け取る確認',
+                3: '概要書面の確認',
+                4: '契約内容を確認してお支払い',
+                5: 'お支払い完了'
             },
             postal: {
-                1: '書面の受け取り方法',
+                1: '受け取り方法を選ぶ',
                 2: '郵送先のご住所',
                 3: 'お申込み内容の確認',
                 4: 'お申込み完了'
