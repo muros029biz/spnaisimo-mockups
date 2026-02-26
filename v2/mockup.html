@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanisimo 短期集中プラン 購入フロー</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans CJK JP", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* デモコントロールパネル */
+        .demo-control {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1e293b;
+            color: white;
+            padding: 10px 16px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+        }
+
+        .demo-control h3 {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .demo-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .demo-btn.reset { background: #64748b; color: white; }
+        .demo-btn.electronic { background: #3b82f6; color: white; }
+        .demo-btn.postal { background: #22c55e; color: white; }
+        .demo-btn.expire { background: #ef4444; color: white; }
+
+        .status-display {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pending { background: #fef3c7; color: #92400e; }
+        .status-badge.active { background: #dcfce7; color: #166534; }
+        .status-badge.expired { background: #fee2e2; color: #991b1b; }
+        .status-badge.complete { background: #dbeafe; color: #1e40af; }
+
+        /* メインコンテンツ */
+        .main-wrapper {
+            margin-top: 50px;
+            padding-bottom: 100px;
+        }
+
+        /* 画面共通 */
+        .screen {
+            display: none;
+            max-width: 480px;
+            margin: 0 auto;
+            background: white;
+            min-height: calc(100vh - 50px);
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* ヘッダー（LP風） */
+        .lp-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 32px 20px;
+            text-align: center;
+        }
+
+        .lp-header.postal {
+            background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
+        }
+
+        .plan-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .plan-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .plan-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .price-box {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 20px;
+            display: inline-block;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .price-main {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .price-main span {
+            font-size: 1rem;
+        }
+
+        .price-tax {
+            font-size: 0.85rem;
+            color: #ffd93d;
+            margin-top: 4px;
+        }
+
+        /* ステップインジケーター */
+        .step-indicator {
+            background: white;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .step-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+        }
+
+        .step-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-dot.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .step-dot.active.postal {
+            background: #22c55e;
+        }
+
+        .step-dot.completed {
+            background: #22c55e;
+            color: white;
+        }
+
+        .step-line {
+            width: 40px;
+            height: 3px;
+            background: #e5e7eb;
+        }
+
+        .step-line.completed {
+            background: #22c55e;
+        }
+
+        .step-label {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        /* コンテンツエリア */
+        .content-area {
+            padding: 24px 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        .section-title.postal {
+            border-bottom-color: #22c55e;
+        }
+
+        .section-description {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        /* オプションカード */
+        .option-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #94a3b8;
+        }
+
+        .option-card.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .option-card.selected.postal {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .option-card.recommended::before {
+            content: 'おすすめ';
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            background: #f59e0b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .option-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .option-card.selected .option-radio {
+            border-color: #3b82f6;
+        }
+
+        .option-card.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 10px;
+            height: 10px;
+            background: #3b82f6;
+            border-radius: 50%;
+        }
+
+        .option-card.selected.postal .option-radio {
+            border-color: #22c55e;
+        }
+
+        .option-card.selected.postal .option-radio::after {
+            background: #22c55e;
+        }
+
+        .option-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .option-description {
+            font-size: 0.85rem;
+            color: #64748b;
+            padding-left: 34px;
+        }
+
+        .option-description.highlight {
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        /* 説明リスト */
+        .explanation-list {
+            margin: 20px 0;
+        }
+
+        .explanation-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .explanation-item:last-child {
+            border-bottom: none;
+        }
+
+        .explanation-number {
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 14px;
+            flex-shrink: 0;
+        }
+
+        .explanation-text {
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .explanation-text strong {
+            color: #1e293b;
+        }
+
+        /* チェックボックス */
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: #f1f5f9;
+        }
+
+        .checkbox-item.checked {
+            background: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .checkbox-box {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            color: transparent;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-item.checked .checkbox-box {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        /* インフォボックス */
+        .info-box {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .info-box.blue {
+            background: #eff6ff;
+            border-color: #93c5fd;
+        }
+
+        .info-box.green {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+
+        .info-box-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 6px;
+        }
+
+        .info-box.blue .info-box-title {
+            color: #1e40af;
+        }
+
+        .info-box.green .info-box-title {
+            color: #166534;
+        }
+
+        .info-box-content {
+            font-size: 0.85rem;
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .info-box.blue .info-box-content {
+            color: #1e3a8a;
+        }
+
+        .info-box.green .info-box-content {
+            color: #14532d;
+        }
+
+        /* フォーム */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        /* 書類プレビュー */
+        .document-preview {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin: 16px 0;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .document-header {
+            background: #f8fafc;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+        }
+
+        .document-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .document-content {
+            padding: 16px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .document-section {
+            margin-bottom: 16px;
+        }
+
+        .document-section-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .document-section p {
+            color: #4b5563;
+        }
+
+        /* ダウンロードボタン */
+        .download-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            padding: 16px;
+            color: #2563eb;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 16px 0;
+            transition: all 0.2s;
+        }
+
+        .download-button:hover {
+            background: #dbeafe;
+        }
+
+        .download-button.downloaded {
+            background: #dcfce7;
+            border-color: #22c55e;
+            color: #166534;
+        }
+
+        /* 確認番号入力エリア */
+        .code-input-area {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .code-input-area h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .code-input-area .subtitle {
+            color: #78350f;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .code-input-area input {
+            width: 180px;
+            padding: 16px;
+            font-size: 1.8rem;
+            text-align: center;
+            border: 2px solid #d1d5db;
+            border-radius: 10px;
+            letter-spacing: 8px;
+            font-weight: 600;
+        }
+
+        .code-input-area input:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .code-input-area .hint {
+            font-size: 0.8rem;
+            color: #92400e;
+            margin-top: 12px;
+        }
+
+        .code-input-area .demo-hint {
+            font-size: 0.75rem;
+            color: #dc2626;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* PayPalエリア */
+        .paypal-area {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .paypal-area.disabled {
+            background: #f1f5f9;
+            border-color: #d1d5db;
+            opacity: 0.6;
+        }
+
+        .paypal-area h3 {
+            color: #1e40af;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .paypal-area .subtitle {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .paypal-area .deadline {
+            display: inline-block;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .paypal-area .email-notice {
+            background: #dcfce7;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #166534;
+            margin-top: 16px;
+        }
+
+        /* 期限切れ表示 */
+        .expired-notice {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 2px solid #ef4444;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .expired-notice .icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        .expired-notice h3 {
+            color: #991b1b;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .expired-notice p {
+            color: #7f1d1d;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* 完了画面 */
+        .complete-header {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .complete-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+        }
+
+        .complete-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .complete-message {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .complete-info-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .complete-info-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #166534;
+            margin-bottom: 12px;
+        }
+
+        .complete-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .complete-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .complete-info-label {
+            color: #64748b;
+        }
+
+        .complete-info-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* 郵送ステータス表示 */
+        .postal-status {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .postal-status h4 {
+            color: #166534;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .postal-status-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid #dcfce7;
+        }
+
+        .postal-status-item:last-child {
+            border-bottom: none;
+        }
+
+        .postal-status-item .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .postal-status-item .icon.done {
+            background: #22c55e;
+            color: white;
+        }
+
+        .postal-status-item .icon.pending {
+            background: #fbbf24;
+            color: white;
+        }
+
+        .postal-status-item .icon.waiting {
+            background: #e5e7eb;
+            color: #9ca3af;
+        }
+
+        .postal-status-item .text strong {
+            display: block;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .postal-status-item .text span {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* フッターボタン */
+        .footer-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 16px 20px;
+            padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            display: flex;
+            gap: 12px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2563eb;
+        }
+
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #16a34a;
+        }
+
+        .btn-paypal {
+            background: #0070ba;
+            color: white;
+            padding: 18px;
+            font-size: 1.1rem;
+        }
+
+        .btn-paypal:hover:not(:disabled) {
+            background: #003087;
+        }
+
+        .btn-paypal:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* トースト通知 */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            z-index: 3000;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .toast.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* 時間表示 */
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- デモコントロールパネル -->
+    <div class="demo-control">
+        <h3>🎮 デモ</h3>
+        <button class="demo-btn reset" onclick="resetDemo()">リセット</button>
+        <button class="demo-btn electronic" onclick="quickStartElectronic()">電子ルート</button>
+        <button class="demo-btn postal" onclick="quickStartPostal()">郵送ルート</button>
+        <button class="demo-btn expire" onclick="simulateExpire()">期限切れ</button>
+        <button class="demo-btn postal" onclick="simulateAdminApprove()" id="adminApproveBtn" style="display:none;">管理画面：購入許可</button>
+        
+        <div class="status-display">
+            <span style="color:#94a3b8;">状態:</span>
+            <span class="status-badge" id="currentStatus">-</span>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <!-- ========== 画面0: イントロ ========== -->
+        <div class="screen active" id="screen0">
+            <div class="lp-header">
+                <div class="plan-label">90日間集中</div>
+                <h1 class="plan-title">短期集中プラン</h1>
+                <p class="plan-description">本気でスペイン語を習得したい方へ</p>
+                <div class="price-box">
+                    <div class="price-label">特別価格</div>
+                    <div class="price-main">96,800<span>円</span></div>
+                    <div class="price-tax">（税込）</div>
+                </div>
+            </div>
+            
+            <div class="content-area">
+                <div class="time-badge">⏱️ 通常 3〜5分 で完了します</div>
+                
+                <h2 class="section-title">お申込みの流れ</h2>
+                
+                <div class="explanation-list">
+                    <div class="explanation-item">
+                        <div class="explanation-number">1</div>
+                        <div class="explanation-text">
+                            <strong>書類の受け取り方法を選ぶ</strong><br>
+                            PDFか郵送をお選びいただけます
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-number">2</div>
+                        <div class="explanation-text">
+                            <strong>重要事項を確認する</strong><br>
+                            概要書面・契約書面の内容をご確認ください
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-number">3</div>
+                        <div class="explanation-text">
+                            <strong>お支払い</strong><br>
+                            PayPalで安全にお支払いいただけます
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box green">
+                    <div class="info-box-title">✨ プラン内容</div>
+                    <div class="info-box-content">
+                        • 50分マンツーマンレッスン × 100回<br>
+                        • 有効期間：90日間
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-primary" style="width:100%;" onclick="startApplication()">購入手続きを始める</button>
+            </div>
+        </div>
+
+        <!-- ========== 画面1: 交付方法選択 ========== -->
+        <div class="screen" id="screen1">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot active" id="dot1">1</div>
+                    <div class="step-line" id="line1"></div>
+                    <div class="step-dot" id="dot2">2</div>
+                    <div class="step-line" id="line2"></div>
+                    <div class="step-dot" id="dot3">3</div>
+                </div>
+                <div class="step-label">書類の受け取り方法</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title">受け取り方法を選んでください</h2>
+                <p class="section-description">
+                    ご契約内容を記載した書面をお届けします。<br>
+                    ご都合の良い方法をお選びください。
+                </p>
+                
+                <div class="option-card recommended selected" id="optionElectronic" onclick="selectRoute('electronic')">
+                    <div class="option-header">
+                        <div class="option-radio"></div>
+                        <div class="option-title">📄 電子（PDF）で受け取る</div>
+                    </div>
+                    <p class="option-description highlight">すぐに確認してお申込みできます</p>
+                </div>
+
+                <div class="option-card" id="optionPostal" onclick="selectRoute('postal')">
+                    <div class="option-header">
+                        <div class="option-radio"></div>
+                        <div class="option-title">📮 郵送で受け取る</div>
+                    </div>
+                    <p class="option-description">届くまで3〜5営業日かかります</p>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="backToIntro()">戻る</button>
+                <button class="btn btn-primary" onclick="nextFromRouteSelect()">次へ</button>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート Step 2: 適合性確認 ========== -->
+        <div class="screen" id="screenE2">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active">2</div>
+                    <div class="step-line"></div>
+                    <div class="step-dot">3</div>
+                </div>
+                <div class="step-label">PDF受け取りの確認</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title">PDF（電子交付）で受け取る確認</h2>
+                
+                <div class="explanation-list">
+                    <div class="explanation-item">
+                        <div class="explanation-number">1</div>
+                        <div class="explanation-text">
+                            電子交付される内容は、契約に関する重要な書類（概要書面・契約書面）です。
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-number">2</div>
+                        <div class="explanation-text">
+                            確認番号を入力した日から<strong>8日間</strong>、クーリングオフが可能です。
+                        </div>
+                    </div>
+                    <div class="explanation-item">
+                        <div class="explanation-number">3</div>
+                        <div class="explanation-text">
+                            <strong>4.5インチ以上の画面</strong>をお持ちで、ご自身でPDFを保存・閲覧できる方のみ電子交付を受けられます。
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 0.95rem; margin: 24px 0 16px; color: #1e293b;">ご確認ください</h3>
+
+                <div class="checkbox-item" id="checkE1" onclick="toggleCheck('checkE1')">
+                    <div class="checkbox-box">✓</div>
+                    <div class="checkbox-label">私はスマートフォンまたはPCを日常的に使用し、PDFを自分で保存・閲覧できます。</div>
+                </div>
+
+                <div class="checkbox-item" id="checkE2" onclick="toggleCheck('checkE2')">
+                    <div class="checkbox-box">✓</div>
+                    <div class="checkbox-label">端末のOS・ブラウザは最新の状態に更新されています。</div>
+                </div>
+
+                <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                    <h3 style="font-size: 0.95rem; margin-bottom: 16px; color: #1e293b;">PDFで受け取ることへの同意</h3>
+                    
+                    <div class="info-box blue">
+                        <div class="info-box-content">
+                            上記の説明内容を理解し、契約書面をPDFで受け取ることに同意される場合は、以下にお名前と「理解しました」をご入力ください。
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">お名前（フルネーム）<span class="required">*</span></label>
+                        <input type="text" class="form-input" id="fullName" placeholder="例：山田 太郎" oninput="checkFormE2()">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">「理解しました」と入力<span class="required">*</span></label>
+                        <input type="text" class="form-input" id="understandInput" placeholder="理解しました" oninput="checkFormE2()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-primary" id="btnE2Next" disabled onclick="nextScreen()">同意して次へ</button>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート Step 3: 概要書面 ========== -->
+        <div class="screen" id="screenE3">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active">3</div>
+                </div>
+                <div class="step-label">概要書面の確認</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title">概要書面の確認</h2>
+
+                <div class="info-box">
+                    <div class="info-box-title">📄 概要書面とは？</div>
+                    <div class="info-box-content">
+                        5万円を超えるサービスをご購入いただく際、法律により事前にお渡しする書類です。
+                    </div>
+                </div>
+
+                <div class="document-preview">
+                    <div class="document-header">
+                        <div class="document-title">重要事項説明書（概要書面）</div>
+                    </div>
+                    <div class="document-content">
+                        <div class="document-section">
+                            <div class="document-section-title">1. 事業者情報</div>
+                            <p>事業者名：株式会社Spanisimo<br>
+                            所在地：〒XXX-XXXX 東京都○○区○○<br>
+                            電話番号：03-XXXX-XXXX</p>
+                        </div>
+                        <div class="document-section">
+                            <div class="document-section-title">2. 役務の内容</div>
+                            <p>サービス名：短期集中プラン<br>
+                            内容：オンラインスペイン語マンツーマンレッスン<br>
+                            提供回数：50分×100回<br>
+                            有効期間：90日間</p>
+                        </div>
+                        <div class="document-section">
+                            <div class="document-section-title">3. お支払い金額</div>
+                            <p>販売価格：88,000円（税抜）<br>
+                            消費税：8,800円<br>
+                            <strong>お支払い総額：96,800円（税込）</strong></p>
+                        </div>
+                        <div class="document-section">
+                            <div class="document-section-title">4. クーリングオフについて</div>
+                            <p>確認番号入力日から8日間は、契約を解除できます。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-button" id="downloadOverview" onclick="downloadDocument('overview')">
+                    📥 概要書面PDFをダウンロード【必須】
+                </div>
+
+                <div class="checkbox-item" id="checkOverview" onclick="toggleCheck('checkOverview')" style="opacity: 0.5; pointer-events: none;">
+                    <div class="checkbox-box">✓</div>
+                    <div class="checkbox-label">概要書面をダウンロードし、内容を確認しました。</div>
+                </div>
+                <p id="downloadHint" style="font-size: 0.8rem; color: #f59e0b; margin-top: -6px; margin-left: 36px;">※ まず概要書面をダウンロードしてください</p>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-primary" id="btnE3Next" disabled onclick="nextScreen()">次へ</button>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート Step 4: 契約書面＋確認番号 ========== -->
+        <div class="screen" id="screenE4">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active">3</div>
+                </div>
+                <div class="step-label">契約書面の確認</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title">契約書面の確認</h2>
+                
+                <div class="info-box blue">
+                    <div class="info-box-title">📋 あと少しで完了です！</div>
+                    <div class="info-box-content">
+                        契約書面PDFをダウンロードし、記載されている<strong>確認番号（4桁）</strong>を入力してください。
+                    </div>
+                </div>
+
+                <div class="download-button" id="downloadContract" onclick="downloadDocument('contract')">
+                    📥 契約書面PDFをダウンロード【必須】
+                </div>
+
+                <div class="code-input-area">
+                    <h3>🔢 確認番号を入力</h3>
+                    <p class="subtitle">契約書面PDFに記載の4桁の番号</p>
+                    <input type="text" id="confirmCode" placeholder="----" maxlength="4" oninput="checkCode()">
+                    <p class="hint">入力すると購入画面に進めます</p>
+                    <p class="demo-hint">（デモ用：1234 を入力）</p>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-primary" id="btnE4Next" disabled onclick="completeCodeInput()">確認番号を送信</button>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート Step 5: PayPal決済 ========== -->
+        <div class="screen" id="screenE5">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot completed">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active">3</div>
+                </div>
+                <div class="step-label">お支払い</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title">お支払い</h2>
+                
+                <div class="paypal-area">
+                    <h3>✅ 購入可能になりました！</h3>
+                    <p class="subtitle">確認番号が認証されました</p>
+                    <div class="deadline">⚠️ 有効期限：本日中</div>
+                    
+                    <button class="btn btn-paypal" style="width:100%;" onclick="completePayment()">
+                        PayPalで支払う（96,800円）
+                    </button>
+                    
+                    <div class="email-notice">
+                        📧 購入URLをメールでも送付しました
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <div class="info-box-title">💡 ご注意</div>
+                    <div class="info-box-content">
+                        本日中にお支払いを完了してください。期限を過ぎると再度お申込みが必要になります。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート 完了画面 ========== -->
+        <div class="screen" id="screenEComplete">
+            <div class="complete-header">
+                <div class="complete-icon">🎉</div>
+                <h1 class="complete-title">購入完了！</h1>
+                <p class="complete-message">ありがとうございます。<br>レッスンの予約が可能になりました。</p>
+            </div>
+            
+            <div class="complete-info-box">
+                <div class="complete-info-title">📋 ご購入内容</div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">プラン</span>
+                    <span class="complete-info-value">短期集中プラン</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">レッスン回数</span>
+                    <span class="complete-info-value">50分 × 100回</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">有効期間</span>
+                    <span class="complete-info-value">90日間</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">お支払い金額</span>
+                    <span class="complete-info-value" style="color: #f59e0b;">96,800円</span>
+                </div>
+            </div>
+            
+            <div style="padding: 0 20px;">
+                <button class="btn btn-success" style="width:100%;" onclick="resetDemo()">マイページへ（デモリセット）</button>
+            </div>
+        </div>
+
+        <!-- ========== 電子ルート 期限切れ ========== -->
+        <div class="screen" id="screenEExpired">
+            <div class="content-area" style="padding-top: 60px;">
+                <div class="expired-notice">
+                    <div class="icon">⏰</div>
+                    <h3>申込期限が切れました</h3>
+                    <p>決済期限（本日中）を過ぎたため、<br>この申込は無効になりました。</p>
+                    <p style="margin-top: 16px; font-weight: 500;">再度お申込みください。</p>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-primary" style="width:100%;" onclick="resetDemo()">再度申込む</button>
+            </div>
+        </div>
+
+        <!-- ========== 郵送ルート Step 2: 住所入力 ========== -->
+        <div class="screen" id="screenP2">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed postal">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active postal">2</div>
+                    <div class="step-line"></div>
+                    <div class="step-dot">3</div>
+                </div>
+                <div class="step-label">送付先住所の入力</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title postal">送付先住所を入力してください</h2>
+                <p class="section-description">
+                    概要書面・契約書面を郵送でお届けします。
+                </p>
+                
+                <div class="form-group">
+                    <label class="form-label">お名前<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="postalName" placeholder="山田 太郎" oninput="checkPostalForm()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">郵便番号<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="postalZip" placeholder="123-4567" oninput="checkPostalForm()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">都道府県<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="postalPref" placeholder="東京都" oninput="checkPostalForm()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">市区町村・番地<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="postalCity" placeholder="渋谷区渋谷1-2-3" oninput="checkPostalForm()">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">電話番号<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="postalPhone" placeholder="090-1234-5678" oninput="checkPostalForm()">
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-secondary" onclick="prevScreen()">戻る</button>
+                <button class="btn btn-success" id="btnP2Next" disabled onclick="submitAddress()">住所を送信</button>
+            </div>
+        </div>
+
+        <!-- ========== 郵送ルート Step 3: 運営対応待ち ========== -->
+        <div class="screen" id="screenP3">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed postal">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot completed postal">✓</div>
+                    <div class="step-line"></div>
+                    <div class="step-dot">3</div>
+                </div>
+                <div class="step-label">書類の発送・返送待ち</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title postal">書類の発送・返送待ち</h2>
+                <p class="section-description">
+                    住所を送信しました。運営が書類を発送いたします。
+                </p>
+                
+                <div class="postal-status">
+                    <h4>📋 進捗状況</h4>
+                    <div class="postal-status-item">
+                        <div class="icon done">✓</div>
+                        <div class="text">
+                            <strong>住所送信完了</strong>
+                            <span>運営に通知しました</span>
+                        </div>
+                    </div>
+                    <div class="postal-status-item" id="statusShipped">
+                        <div class="icon waiting">2</div>
+                        <div class="text">
+                            <strong>書類発送</strong>
+                            <span>運営が発送準備中です</span>
+                        </div>
+                    </div>
+                    <div class="postal-status-item" id="statusReturned">
+                        <div class="icon waiting">3</div>
+                        <div class="text">
+                            <strong>お客様からの返送</strong>
+                            <span>書類到着後、スパニッシモへ返送</span>
+                        </div>
+                    </div>
+                    <div class="postal-status-item" id="statusApproved">
+                        <div class="icon waiting">4</div>
+                        <div class="text">
+                            <strong>購入許可</strong>
+                            <span>運営確認後、メールでお知らせ</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-box green">
+                    <div class="info-box-title">📬 次のステップ</div>
+                    <div class="info-box-content">
+                        購入許可が出ましたら、メールでPayPal購入URLをお送りします。しばらくお待ちください。
+                    </div>
+                </div>
+                
+                <p style="text-align:center; font-size: 0.8rem; color: #64748b; margin-top: 20px;">
+                    <strong>（デモ：上部の「管理画面：購入許可」ボタンで進行）</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- ========== 郵送ルート Step 4: PayPal決済 ========== -->
+        <div class="screen" id="screenP4">
+            <div class="step-indicator">
+                <div class="step-dots">
+                    <div class="step-dot completed postal">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot completed postal">✓</div>
+                    <div class="step-line completed"></div>
+                    <div class="step-dot active postal">3</div>
+                </div>
+                <div class="step-label">お支払い</div>
+            </div>
+            
+            <div class="content-area">
+                <h2 class="section-title postal">お支払い</h2>
+                
+                <div class="paypal-area" style="border-color: #22c55e; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+                    <h3 style="color: #166534;">✅ 購入許可が出ました！</h3>
+                    <p class="subtitle" style="color: #22c55e;">書類の確認が完了しました</p>
+                    <div class="deadline">⚠️ 有効期限：7日間</div>
+                    
+                    <button class="btn btn-paypal" style="width:100%;" onclick="completePaymentPostal()">
+                        PayPalで支払う（96,800円）
+                    </button>
+                    
+                    <div class="email-notice">
+                        📧 購入許可メールを送付しました
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 郵送ルート 完了画面 ========== -->
+        <div class="screen" id="screenPComplete">
+            <div class="complete-header" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+                <div class="complete-icon">🎉</div>
+                <h1 class="complete-title">購入完了！</h1>
+                <p class="complete-message">ありがとうございます。<br>レッスンの予約が可能になりました。</p>
+            </div>
+            
+            <div class="complete-info-box">
+                <div class="complete-info-title" style="color: #166534;">📋 ご購入内容</div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">プラン</span>
+                    <span class="complete-info-value">短期集中プラン</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">レッスン回数</span>
+                    <span class="complete-info-value">50分 × 100回</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">有効期間</span>
+                    <span class="complete-info-value">90日間</span>
+                </div>
+                <div class="complete-info-item">
+                    <span class="complete-info-label">お支払い金額</span>
+                    <span class="complete-info-value" style="color: #f59e0b;">96,800円</span>
+                </div>
+            </div>
+            
+            <div style="padding: 0 20px;">
+                <button class="btn btn-success" style="width:100%;" onclick="resetDemo()">マイページへ（デモリセット）</button>
+            </div>
+        </div>
+
+        <!-- ========== 郵送ルート 期限切れ ========== -->
+        <div class="screen" id="screenPExpired">
+            <div class="content-area" style="padding-top: 60px;">
+                <div class="expired-notice">
+                    <div class="icon">⏰</div>
+                    <h3>申込期限が切れました</h3>
+                    <p>決済期限（7日間）を過ぎたため、<br>この申込は無効になりました。</p>
+                    <p style="margin-top: 16px; font-weight: 500;">再度お申込みください。</p>
+                </div>
+            </div>
+            
+            <div class="footer-buttons">
+                <button class="btn btn-primary" style="width:100%;" onclick="resetDemo()">再度申込む</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 状態管理
+        let currentRoute = 'electronic';
+        let currentScreen = 0;
+        let status = '-';
+        
+        // チェック状態
+        let checks = {
+            checkE1: false,
+            checkE2: false,
+            checkOverview: false
+        };
+        let overviewDownloaded = false;
+        let contractDownloaded = false;
+        
+        // 画面表示更新
+        function updateUI() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            
+            let screenId = 'screen0';
+            
+            if (currentScreen === 0) {
+                screenId = 'screen0';
+            } else if (currentScreen === 1) {
+                screenId = 'screen1';
+            } else if (currentRoute === 'electronic') {
+                if (status === 'expired') {
+                    screenId = 'screenEExpired';
+                } else if (currentScreen === 2) {
+                    screenId = 'screenE2';
+                } else if (currentScreen === 3) {
+                    screenId = 'screenE3';
+                } else if (currentScreen === 4) {
+                    screenId = 'screenE4';
+                } else if (currentScreen === 5) {
+                    screenId = 'screenE5';
+                } else if (currentScreen === 6) {
+                    screenId = 'screenEComplete';
+                }
+            } else if (currentRoute === 'postal') {
+                if (status === 'expired') {
+                    screenId = 'screenPExpired';
+                } else if (currentScreen === 2) {
+                    screenId = 'screenP2';
+                } else if (currentScreen === 3) {
+                    screenId = 'screenP3';
+                } else if (currentScreen === 4) {
+                    screenId = 'screenP4';
+                } else if (currentScreen === 5) {
+                    screenId = 'screenPComplete';
+                }
+            }
+            
+            document.getElementById(screenId).classList.add('active');
+            updateStatusDisplay();
+            
+            // 管理画面ボタン表示
+            document.getElementById('adminApproveBtn').style.display = 
+                (currentRoute === 'postal' && currentScreen === 3) ? 'inline-block' : 'none';
+        }
+        
+        function updateStatusDisplay() {
+            const badge = document.getElementById('currentStatus');
+            badge.textContent = status;
+            badge.className = 'status-badge';
+            
+            if (status.includes('pending') || status.includes('waiting') || status.includes('submitted') || status.includes('shipped')) {
+                badge.classList.add('pending');
+            } else if (status.includes('payable') || status.includes('approved')) {
+                badge.classList.add('active');
+            } else if (status === 'expired') {
+                badge.classList.add('expired');
+            } else if (status === 'paid') {
+                badge.classList.add('complete');
+            }
+        }
+        
+        // 開始
+        function startApplication() {
+            currentScreen = 1;
+            status = 'selecting_route';
+            updateUI();
+        }
+        
+        function backToIntro() {
+            currentScreen = 0;
+            status = '-';
+            updateUI();
+        }
+        
+        // ルート選択
+        function selectRoute(route) {
+            currentRoute = route;
+            document.getElementById('optionElectronic').classList.toggle('selected', route === 'electronic');
+            document.getElementById('optionPostal').classList.toggle('selected', route === 'postal');
+            document.getElementById('optionPostal').classList.toggle('postal', route === 'postal');
+        }
+        
+        function nextFromRouteSelect() {
+            currentScreen = 2;
+            if (currentRoute === 'electronic') {
+                status = 'pending_consent';
+            } else {
+                status = 'address_input';
+            }
+            updateUI();
+        }
+        
+        // 画面遷移
+        function nextScreen() {
+            currentScreen++;
+            updateUI();
+        }
+        
+        function prevScreen() {
+            if (currentScreen > 1) {
+                currentScreen--;
+                if (currentScreen === 1) {
+                    status = 'selecting_route';
+                }
+            }
+            updateUI();
+        }
+        
+        // チェックボックス
+        function toggleCheck(id) {
+            checks[id] = !checks[id];
+            const el = document.getElementById(id);
+            el.classList.toggle('checked', checks[id]);
+            
+            // フォームチェック
+            if (id === 'checkE1' || id === 'checkE2') {
+                checkFormE2();
+            }
+            if (id === 'checkOverview') {
+                document.getElementById('btnE3Next').disabled = !checks.checkOverview;
+            }
+        }
+        
+        // 電子ルート Step2 フォームチェック
+        function checkFormE2() {
+            const name = document.getElementById('fullName').value.trim();
+            const understand = document.getElementById('understandInput').value.trim();
+            const valid = checks.checkE1 && checks.checkE2 && name && understand === '理解しました';
+            document.getElementById('btnE2Next').disabled = !valid;
+        }
+        
+        // ダウンロード
+        function downloadDocument(type) {
+            if (type === 'overview') {
+                overviewDownloaded = true;
+                const btn = document.getElementById('downloadOverview');
+                btn.textContent = '✓ 概要書面をダウンロード済み';
+                btn.classList.add('downloaded');
+                
+                const checkItem = document.getElementById('checkOverview');
+                checkItem.style.opacity = '1';
+                checkItem.style.pointerEvents = 'auto';
+                document.getElementById('downloadHint').style.display = 'none';
+                
+                showToast('📥 概要書面PDFをダウンロードしました');
+            } else if (type === 'contract') {
+                contractDownloaded = true;
+                const btn = document.getElementById('downloadContract');
+                btn.textContent = '✓ 契約書面をダウンロード済み';
+                btn.classList.add('downloaded');
+                showToast('📥 契約書面PDFをダウンロードしました（確認番号: 1234）');
+            }
+        }
+        
+        // 確認番号チェック
+        function checkCode() {
+            const code = document.getElementById('confirmCode').value;
+            document.getElementById('btnE4Next').disabled = code.length !== 4;
+        }
+        
+        // 確認番号入力完了
+        function completeCodeInput() {
+            const code = document.getElementById('confirmCode').value;
+            if (code === '1234') {
+                status = 'payable_today';
+                currentScreen = 5;
+                showToast('✅ 確認番号が認証されました');
+                updateUI();
+            } else {
+                showToast('❌ 確認番号が正しくありません');
+            }
+        }
+        
+        // 決済完了（電子）
+        function completePayment() {
+            status = 'paid';
+            currentScreen = 6;
+            showToast('🎉 決済が完了しました！');
+            updateUI();
+        }
+        
+        // 郵送フォームチェック
+        function checkPostalForm() {
+            const name = document.getElementById('postalName').value.trim();
+            const zip = document.getElementById('postalZip').value.trim();
+            const pref = document.getElementById('postalPref').value.trim();
+            const city = document.getElementById('postalCity').value.trim();
+            const phone = document.getElementById('postalPhone').value.trim();
+            
+            document.getElementById('btnP2Next').disabled = !(name && zip && pref && city && phone);
+        }
+        
+        // 住所送信
+        function submitAddress() {
+            status = 'address_submitted';
+            currentScreen = 3;
+            showToast('📬 住所を送信しました');
+            updateUI();
+        }
+        
+        // 管理画面：購入許可
+        function simulateAdminApprove() {
+            status = 'approved_payable_7d';
+            currentScreen = 4;
+            
+            document.getElementById('statusShipped').querySelector('.icon').className = 'icon done';
+            document.getElementById('statusShipped').querySelector('.icon').textContent = '✓';
+            document.getElementById('statusReturned').querySelector('.icon').className = 'icon done';
+            document.getElementById('statusReturned').querySelector('.icon').textContent = '✓';
+            document.getElementById('statusApproved').querySelector('.icon').className = 'icon done';
+            document.getElementById('statusApproved').querySelector('.icon').textContent = '✓';
+            
+            showToast('✅ 購入許可を出しました');
+            
+            setTimeout(() => {
+                updateUI();
+            }, 1000);
+        }
+        
+        // 決済完了（郵送）
+        function completePaymentPostal() {
+            status = 'paid';
+            currentScreen = 5;
+            showToast('🎉 決済が完了しました！');
+            updateUI();
+        }
+        
+        // 期限切れシミュレート
+        function simulateExpire() {
+            if (currentScreen >= 2) {
+                status = 'expired';
+                showToast('⏰ 期限切れをシミュレートしました');
+                updateUI();
+            } else {
+                showToast('❌ まずルートを選択してください');
+            }
+        }
+        
+        // デモリセット
+        function resetDemo() {
+            currentRoute = 'electronic';
+            currentScreen = 0;
+            status = '-';
+            checks = { checkE1: false, checkE2: false, checkOverview: false };
+            overviewDownloaded = false;
+            contractDownloaded = false;
+            
+            // UIリセット
+            document.getElementById('optionElectronic').classList.add('selected');
+            document.getElementById('optionPostal').classList.remove('selected', 'postal');
+            document.querySelectorAll('.checkbox-item').forEach(el => el.classList.remove('checked'));
+            document.getElementById('downloadOverview').textContent = '📥 概要書面PDFをダウンロード【必須】';
+            document.getElementById('downloadOverview').classList.remove('downloaded');
+            document.getElementById('downloadContract').textContent = '📥 契約書面PDFをダウンロード【必須】';
+            document.getElementById('downloadContract').classList.remove('downloaded');
+            document.getElementById('checkOverview').style.opacity = '0.5';
+            document.getElementById('checkOverview').style.pointerEvents = 'none';
+            document.getElementById('downloadHint').style.display = 'block';
+            document.getElementById('confirmCode').value = '';
+            document.getElementById('fullName').value = '';
+            document.getElementById('understandInput').value = '';
+            document.getElementById('postalName').value = '';
+            document.getElementById('postalZip').value = '';
+            document.getElementById('postalPref').value = '';
+            document.getElementById('postalCity').value = '';
+            document.getElementById('postalPhone').value = '';
+            document.getElementById('btnE2Next').disabled = true;
+            document.getElementById('btnE3Next').disabled = true;
+            document.getElementById('btnE4Next').disabled = true;
+            document.getElementById('btnP2Next').disabled = true;
+            
+            // 郵送ステータスリセット
+            document.getElementById('statusShipped').querySelector('.icon').className = 'icon waiting';
+            document.getElementById('statusShipped').querySelector('.icon').textContent = '2';
+            document.getElementById('statusReturned').querySelector('.icon').className = 'icon waiting';
+            document.getElementById('statusReturned').querySelector('.icon').textContent = '3';
+            document.getElementById('statusApproved').querySelector('.icon').className = 'icon waiting';
+            document.getElementById('statusApproved').querySelector('.icon').textContent = '4';
+            
+            showToast('🔄 デモをリセットしました');
+            updateUI();
+        }
+        
+        // クイックスタート
+        function quickStartElectronic() {
+            resetDemo();
+            setTimeout(() => {
+                startApplication();
+            }, 300);
+        }
+        
+        function quickStartPostal() {
+            resetDemo();
+            setTimeout(() => {
+                selectRoute('postal');
+                startApplication();
+            }, 300);
+        }
+        
+        // トースト表示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // 初期化
+        updateUI();
+    </script>
+</body>
+</html>
