@@ -48,6 +48,18 @@
             display: block;
             margin-bottom: 4px;
         }
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        .section-title.archive {
+            border-bottom-color: #94a3b8;
+            color: #64748b;
+        }
         .card-list {
             display: flex;
             flex-direction: column;
@@ -68,6 +80,13 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(0,0,0,0.12);
         }
+        .card.archive {
+            background: #f8fafc;
+            opacity: 0.8;
+        }
+        .card.archive:hover {
+            border-color: #94a3b8;
+        }
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -79,6 +98,9 @@
         }
         .card-title::before {
             content: '📄';
+        }
+        .card-title.diagram::before {
+            content: '📊';
         }
         .card-description {
             font-size: 0.9rem;
@@ -96,6 +118,10 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
+        .status-latest {
+            background: #dcfce7;
+            color: #166534;
+        }
         .status-review {
             background: #e3f2fd;
             color: #1565c0;
@@ -104,9 +130,9 @@
             background: #e8f5e9;
             color: #2e7d32;
         }
-        .status-draft {
-            background: #f5f5f5;
-            color: #666;
+        .status-archive {
+            background: #f1f5f9;
+            color: #64748b;
         }
         footer {
             margin-top: 48px;
@@ -128,29 +154,59 @@
             このページは社内レビュー用です。URLの外部共有はご遠慮ください。
         </div>
 
+        <!-- 最新版（合意仕様版） -->
+        <h2 class="section-title">📌 最新版（合意仕様版）</h2>
         <div class="card-list">
-            <a href="90day-intensive-plan-flow.html" class="card">
-                <div class="card-title">短期集中プラン 購入フロー</div>
+            <a href="v2/mockup.html" class="card">
+                <div class="card-title">短期集中プラン 購入フロー（モックアップ）</div>
                 <p class="card-description">
-                    90日間100回レッスン（税込96,800円）の購入フロー。<br>
-                    特定商取引法に基づく電子交付対応版。
+                    弁護士・エンジニア合意に基づく最新版。<br>
+                    電子ルート：確認番号入力→当日中決済可能<br>
+                    郵送ルート：管理画面許可→7日間決済可能
                 </p>
                 <div class="card-meta">
-                    <span class="status status-review">弁護士確認中</span>
+                    <span class="status status-latest">✅ 合意済み</span>
+                    最終更新: 2026年2月27日
+                </div>
+            </a>
+
+            <a href="v2/flow-diagram.html" class="card">
+                <div class="card-title diagram">短期集中プラン 購入フロー（フロー図）</div>
+                <p class="card-description">
+                    電子ルート・郵送ルートの全体フローと状態管理を図示。
+                </p>
+                <div class="card-meta">
+                    <span class="status status-latest">✅ 合意済み</span>
+                    最終更新: 2026年2月27日
+                </div>
+            </a>
+        </div>
+
+        <!-- 弁護士相談前版（アーカイブ） -->
+        <h2 class="section-title archive">📁 弁護士相談前版（アーカイブ）</h2>
+        <div class="card-list">
+            <a href="90day-intensive-plan-flow.html" class="card archive">
+                <div class="card-title">短期集中プラン 購入フロー（モックアップ）</div>
+                <p class="card-description">
+                    90日間100回レッスン（税込96,800円）の購入フロー。<br>
+                    特定商取引法に基づく電子交付対応版（相談前）。
+                </p>
+                <div class="card-meta">
+                    <span class="status status-archive">アーカイブ</span>
                     最終更新: 2026年2月2日
                 </div>
             </a>
 
-            <!-- 今後追加するモックアップ用のテンプレート
-            <a href="xxxxx.html" class="card">
-                <div class="card-title">タイトル</div>
-                <p class="card-description">説明文</p>
+            <a href="90dayintensive-plan-flow-diagram.html" class="card archive">
+                <div class="card-title diagram">短期集中プラン フロー図</div>
+                <p class="card-description">
+                    弁護士相談前のフロー図（参照用）。
+                </p>
                 <div class="card-meta">
-                    <span class="status status-draft">下書き</span>
-                    最終更新: 2026年XX月XX日
+                    <span class="status status-archive">アーカイブ</span>
+                    最終更新: 2026年2月2日
                 </div>
             </a>
-            -->
         </div>
 
         <footer>
